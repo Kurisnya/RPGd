@@ -11,6 +11,7 @@ class Program
         //INICIAÇÃO DE ATRIBUTOS PRIMORDIAIS
         AllMenus menus = new AllMenus();
         Player P1 = new Player();
+        Itens.CriarItens();
 
         //CHAVE BOOLEANA PARA LOOP
         bool loopINV = true;

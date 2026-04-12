@@ -6,15 +6,16 @@ using ConsoleHelper;
 //legal.
 public static class Itens
 {
-    //C: O procedimento STAT apenas serve para lançar status dos itens do inventário, por enquanto.
-    public static void Stat(string ItemName)
+    //EQUIPAMENTOS
+    public static Equipamento Banana;
+    public static Equipamento Faca;
+    public static void CriarItens()
     {
-        switch (ItemName)
-        {
-            case "Banana":
-                {
-                  System.Console.WriteLine("\nComo isso foi parar aqui?"); 
-                  System.Console.WriteLine(@"
+        Banana = new Equipamento();
+        Banana.Nome = "Banana";
+        Banana.Tipo = "Permanente";
+        Banana.Descrição = "Como isso foi parar aqui?";
+        Banana.Imagem = @"
                     ▄▄
                     ▄▄▄▄▄▄▄▄
                      ▄▄ ▄  ▄▄▄▄
@@ -26,8 +27,46 @@ public static class Itens
                       ▄▄   ▄▄▄
                      ▄▄▄▄▄▄
                      ▄▄
-                                                                                ");
-                  Console.ReadKey(); 
+                                                                                ";
+    //-----------------------------------------------------------------------------------
+        Faca = new Equipamento();
+        Faca.Nome = "Faca";
+        Faca.Tipo = "Arma";
+        Faca.Atq = 3;
+        Faca.Def = 1;
+        Faca.Descrição = "Uma faca do tipo que se encontra em uma sala de cirurgia. Deve doer";
+        Faca.Imagem = @"   
+                           /|     
+                          /■|     
+                         /■▒■     
+                        |■▒▒■     
+                        |■▒▒■█    
+                        |■■█▓█■   
+                            █▓█■  
+                             █▓█■ 
+                              █▓█ 
+                              ■█■ ";
+    }
+    //
+    //C: O método Stat é onde as descrições e imagens dos itens serão mostrados, caso o jogador queira
+    //ver os detalhes de um item específico. Ele é chamado no MainLoop, dentro do loop do inventário, quando
+    //o jogador seleciona um item para ver.
+    public static void Stat(string ItemName)
+    {
+        switch (ItemName)
+        {
+            case "Banana":
+                {
+                    System.Console.WriteLine(Banana.Descrição);
+                    System.Console.WriteLine(Banana.Imagem);
+                    Console.ReadKey();
+                }
+            break;
+            case "Faca":
+                {
+                    System.Console.WriteLine(Faca.Descrição);
+                    System.Console.WriteLine(Faca.Imagem);
+                    Console.ReadKey();
                 }
             break;
         }
