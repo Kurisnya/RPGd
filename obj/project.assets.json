@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kuris/Área de trabalho/clear/RPGd/RPGd.csproj",
+      "projectUniqueName": "/home/kuris/Área de trabalho/clear/1234/RPGd/RPGd.csproj",
       "projectName": "RPGd",
-      "projectPath": "/home/kuris/Área de trabalho/clear/RPGd/RPGd.csproj",
+      "projectPath": "/home/kuris/Área de trabalho/clear/1234/RPGd/RPGd.csproj",
       "packagesPath": "/home/kuris/.nuget/packages/",
-      "outputPath": "/home/kuris/Área de trabalho/clear/RPGd/obj/",
+      "outputPath": "/home/kuris/Área de trabalho/clear/1234/RPGd/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/kuris/.nuget/NuGet/NuGet.Config"
