@@ -1,34 +1,33 @@
 namespace RPGd;
+
+using System.Runtime.Intrinsics.Arm;
 using ConsoleHelper;
 
-public class AllMenus
+public static class AllMenus
 {
-    //INVENTÁRIO
-    private Settings settingsINV = new Settings
-    {
-        IntroText= "Inventário",
-        Selection= ">"
-
-    };
-    public ChoiceMenu Inventário;
-    //
-    //MAIN LOOP
-    private Settings settingsMainLoop = new Settings
-    {
-        IntroText= "Menu Principal",
-        Selection= ">"
-    };
-    public ChoiceMenu MainLoop;
-    public AllMenus()
+    public static ChoiceMenu Equipamento;
+    public static ChoiceMenu Inventário;
+    public static ChoiceMenu MainLoop;
+    public static string bimbim = Player.Arma.Imagem;
+    static AllMenus()
     {
         //MAIN LOOP
-        MainLoop = new ChoiceMenu(settingsMainLoop);
-        MainLoop.Options.Add(new MenuItem
+        MainLoop = new ChoiceMenu(new Settings
         {
-            Title= "Inventário",
-            Value= "Inventário"
+            IntroText= "Menu Principal",
+            Selection= ">"
         });
         //INVENTÁRIO
-        Inventário = new ChoiceMenu(settingsINV);
+        Inventário = new ChoiceMenu(new Settings
+        {
+            IntroText= "Inventário",
+            Selection= ">"
+        });
+        //EQUIPAMENTO
+        Equipamento = new ChoiceMenu(new Settings
+        {
+            IntroText= "Equipamento",
+            Selection= ">"
+        });
     }
 }

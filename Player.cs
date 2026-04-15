@@ -3,18 +3,21 @@ using ConsoleHelper;
 //C: A classe player é onde o jogador terá todos os seus atributos usados para interagir com o mundo
 //declarados.
 
-public class Player
+public static class Player
 {
-    public Equipamento Arma;
-    public Equipamento Armadura;
 
-    public List<string> Inventário = new List<string>();
+    static public Equipamento Arma;
+    static public Equipamento Armadura;
+
+    static public List<Equipamento> Inventário = new List<Equipamento>();
     
 
     //C: O player começa com uma banana no seu inventário.
-    public Player()
+    static Player()
     {
-        Inventário.Add("Banana");
-        Inventário.Add("Faca");
+        Arma = Itens.Nada;
+        Armadura = Itens.Nada;
+        Inventário.Add(Itens.Banana);
+        Inventário.Add(Itens.Faca);
     }
 }
