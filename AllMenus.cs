@@ -20,7 +20,16 @@ public static class AllMenus
         //INVENTÁRIO
         Inventário = new ChoiceMenu(new Settings
         {
-            IntroText= "Inventário",
+            IntroText= @"
+                      
+      ██████████      
+     ██        ████   
+    ██            █   
+   ███████      ████  
+  ██     ████████  █  
+  █                █  
+  ██             ███  
+  ████████████████    ",
             Selection= ">"
         });
         //EQUIPAMENTO

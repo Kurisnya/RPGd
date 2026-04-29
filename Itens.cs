@@ -12,11 +12,12 @@ public static class Itens
     public static Equipamento Faca;
     static Itens()
     {
-        Banana = new Equipamento();
-        Banana.Nome = "Banana";
-        Banana.Tipo = "Permanente";
-        Banana.Descrição = "Como isso foi parar aqui?";
-        Banana.Imagem = @"
+        Banana = new Equipamento
+        {
+            Nome = "Banana",
+            Tipo = "Permanente",
+            Descrição = "Como isso foi parar aqui?",
+            Imagem = @"
 █████████████████████
 █▌  ▄▄ ▄▄▄         ▐█
 █▌    █▒▒ █▄▄      ▐█
@@ -26,31 +27,36 @@ public static class Itens
 █▌       █ ▄▒▄█    ▐█
 █▌       █▒▒▄█     ▐█
 █▌       █▀▀       ▐█
-█████████████████████";
-    //-----------------------------------------------------------------------------------
-        Faca = new Equipamento();
-        Faca.Nome = "Faca";
-        Faca.Tipo = "Arma";
-        Faca.Atq = 3;
-        Faca.Def = 1;
-        Faca.Descrição = "Uma faca do tipo que se encontra em uma sala de cirurgia. Deve doer";
-        Faca.Imagem = @"
+█████████████████████"
+        };
+        //-----------------------------------------------------------------------------------
+        Faca = new Equipamento
+        {
+            Nome = "Faca",
+            Tipo = "Arma",
+            Atq = 3,
+            Def = 1,
+            Descrição = "Uma faca do tipo que se encontra em uma sala de cirurgia. Deve doer",
+            Imagem = @"
 ████████████████████
 █▌   ▄▄▄▄▄▄▄█     ▐█
 █▌  █▒▒▒▒▒▒▒█■■   ▐█
 █▌   ▀▀▀▀▀▀▀█     ▐█
-████████████████████";
-    //---------------------------------------------------------------------------
-        Nada = new Equipamento();
-        Nada.Nome = "Nada";
-        Nada.Tipo = "Nenhum";
-        Nada.Descrição = "Não tem nada aqui.";
-        Nada.Imagem = @"
+████████████████████"
+        };
+        //---------------------------------------------------------------------------
+        Nada = new Equipamento
+        {
+            Nome = "Nada",
+            Tipo = "Nenhum",
+            Descrição = "Não tem nada aqui.",
+            Imagem = @"
 ████████████████████
 █▌                ▐█
 █▌                ▐█
 █▌                ▐█
-████████████████████";
+████████████████████"
+        };
     }
     //
     //C: O método Stat é onde as descrições e imagens dos itens serão mostrados, caso o jogador queira
@@ -62,8 +68,8 @@ public static class Itens
         {
             case "Banana":
                 {
-                    System.Console.WriteLine(Banana.Descrição);
-                    System.Console.WriteLine(Banana.Imagem);
+                    Console.WriteLine(Banana.Descrição);
+                    Console.WriteLine(Banana.Imagem);
                     Console.ReadKey(true);
                 }
             break;
