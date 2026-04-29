@@ -86,9 +86,6 @@ class Program
                         //EQUIPAMENTO
                         Console.Clear();
                         var choiceEquip = AllMenus.Equipamento.ReadChoice(true); 
-                        System.Console.WriteLine(Player.Arma.Nome);
-                        AllMenus.bimbim = Player.Arma.Imagem;
-                        Console.ReadKey(true);
                         if(choiceEquip.Value == "Voltar")
                         {
                             loopINV = false;
@@ -97,6 +94,7 @@ class Program
                         {
                             case "Arma":
                                 {
+                                    //Adiciono as opções de equipamento já existentes:
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Tipo == "Arma")
@@ -108,7 +106,15 @@ class Program
                                             });
                                         }
                                     }
+                                    //Adiciono a opção de nada.
+                                    AllMenus.Inventário.Options.Add(new MenuItem
+                                    {
+                                        Title= "Nada",
+                                        Value="Nada"
+                                    });
+                                    //LEIO O MENU
                                     var choiceArma = AllMenus.Inventário.ReadChoice(true);
+                                    //Valido a resposta nos itens já existentes.
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Nome == choiceArma.Value)
@@ -116,8 +122,12 @@ class Program
                                             Player.Arma = item;
                                             System.Console.WriteLine($"Você equipou {item.Nome} como arma.");
                                             Console.ReadKey(true);
+                                            AllMenus.Equipamento._settings.IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}";
                                         }
                                     }
+                                //LIMPA O MENU EQUIPAMENTO E INVENTÁRIO
+                                AllMenus.Inventário.Options.Clear();
+                                AllMenus.Equipamento.Options.Clear();
                                 }
                             break;
                             case "Armadura":
@@ -133,14 +143,26 @@ class Program
                                             });
                                         }
                                     }
+                                    //Adiciono a opção de nada.
+                                    AllMenus.Inventário.Options.Add(new MenuItem
+                                    {
+                                        Title= "Nada",
+                                        Value="Nada"
+                                    });
                                     var choiceArmadura = AllMenus.Inventário.ReadChoice(true);
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Nome == choiceArmadura.Value)
                                         {
                                             Player.Armadura = item;
+                                            System.Console.WriteLine($"Você equipou {item.Nome} como armadura.");
+
                                         }
                                     }
+
+                                //LIMPO O OS MENUS
+                                AllMenus.Inventário.Options.Clear();
+                                AllMenus.Equipamento.Options.Clear();
                                 }
                             break;
                         }

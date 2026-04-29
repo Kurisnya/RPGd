@@ -6,7 +6,7 @@ namespace ConsoleHelper
 
     public class ChoiceMenu
     {
-        private Settings _settings;
+        public Settings _settings;
         public List<MenuItem> Options { get; }
         public ChoiceMenu(Settings settings = null)
         {

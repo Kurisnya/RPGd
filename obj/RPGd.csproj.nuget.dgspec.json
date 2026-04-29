@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\christian.soares\\Desktop\\1\\clear\\Rpgd\\RPGd\\RPGd.csproj": {}
+    "C:\\Users\\christian.soares\\Desktop\\1\\clear\\RPGd\\RPGd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\christian.soares\\Desktop\\1\\clear\\Rpgd\\RPGd\\RPGd.csproj": {
+    "C:\\Users\\christian.soares\\Desktop\\1\\clear\\RPGd\\RPGd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\Rpgd\\RPGd\\RPGd.csproj",
+        "projectUniqueName": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\RPGd\\RPGd.csproj",
         "projectName": "RPGd",
-        "projectPath": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\Rpgd\\RPGd\\RPGd.csproj",
+        "projectPath": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\RPGd\\RPGd.csproj",
         "packagesPath": "C:\\Users\\christian.soares\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\Rpgd\\RPGd\\obj\\",
+        "outputPath": "C:\\Users\\christian.soares\\Desktop\\1\\clear\\RPGd\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\christian.soares\\AppData\\Roaming\\NuGet\\NuGet.Config"

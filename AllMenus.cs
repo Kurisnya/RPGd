@@ -26,7 +26,7 @@ public static class AllMenus
         //EQUIPAMENTO
         Equipamento = new ChoiceMenu(new Settings
         {
-            IntroText= "Equipamento",
+            IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}",
             Selection= ">"
         });
     }
