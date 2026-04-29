@@ -62,3 +62,6 @@ Ao critar com uma arma melee, re-rola os dados na tentativa de causar o máximo 
 
 
 
+## TO DO
+
+>> Implemente um sistema de fases estilo roguelike onde, a partir do MainLoop, o jogador interage com o mundo e avança na run.
