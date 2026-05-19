@@ -5,38 +5,44 @@ using ConsoleHelper;
 
 public static class AllMenus
 {
-    public static ChoiceMenu Equipamento;
-    public static ChoiceMenu Inventário;
-    public static ChoiceMenu MainLoop;
-    public static string bimbim = Player.Arma.Imagem;
+    //INTERFACE DO JOGO
+    public static ChoiceMenu Interface;
+
+    //LISTA ONDE FICAM AS OPÇÕES DA INTERFACE DO JOGO
+    public static List<string> InterfaceList = new List<string>
+        {
+            "Inventário",
+            "Equipamento"
+        };
+
     static AllMenus()
     {
         //MAIN LOOP
-        MainLoop = new ChoiceMenu(new Settings
+        Interface = new ChoiceMenu(new Settings
         {
             IntroText= "Menu Principal",
             Selection= ">"
         });
-        //INVENTÁRIO
-        Inventário = new ChoiceMenu(new Settings
-        {
-            IntroText= @"
-                      
-      ██████████      
-     ██        ████   
-    ██            █   
-   ███████      ████  
-  ██     ████████  █  
-  █                █  
-  ██             ███  
-  ████████████████    ",
-            Selection= ">"
-        });
-        //EQUIPAMENTO
-        Equipamento = new ChoiceMenu(new Settings
-        {
-            IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}",
-            Selection= ">"
-        });
     }
+
+    //Limpa as opções já existentes no menu e injeta as opções presentes na InterfaceList
+    public static void LimparEInserir()
+    {
+        Interface.Options.Clear();
+        foreach (string option in InterfaceList)
+        {
+            Interface.Options.Add(new MenuItem
+            {
+                Title= option,
+                Value= option
+            });
+        }
+    }
+
+    //Edita o título da interface.
+    public static void EditarTitulo(string title)
+    {
+        Interface._settings.IntroText = title;
+    }
+    
 }

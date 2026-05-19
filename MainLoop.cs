@@ -5,15 +5,9 @@ class Program
 //LEGENDA:
 //C - Comentário
 
-
     static void Main(string[] args)
     {
         //INICIAÇÃO DE ATRIBUTOS PRIMORDIAIS
-        List<string> MainLoopOptions = new List<string>
-        {
-            "Inventário",
-            "Equipamento"
-        };
 
         //CHAVE BOOLEANA PARA LOOP
         bool loopINV = true;
@@ -25,67 +19,76 @@ class Program
             loopINV=true;
 
             //MENU PRINCIPAL
-            foreach(string option in MainLoopOptions)
-            AllMenus.MainLoop.Options.Add(new MenuItem
-            {
-                Title= option,
-                Value= option
-            });
-            var choice = AllMenus.MainLoop.ReadChoice(true);
+            //1.Limpo as opções da lista do menu
+            AllMenus.InterfaceList.Clear();
+
+            //2.Encho a lista com os itens
+            AllMenus.InterfaceList.Add("Inventário");
+            AllMenus.InterfaceList.Add("Equipamento");
+
+            //3.Limpo o menu e lanço a nova lista nele
+            AllMenus.LimparEInserir();
+
+            //Menu lançado
+            var choice = AllMenus.Interface.ReadChoice(true);
             switch (choice.Value)
             {
                 //INVENTÁRIO
                 case "Inventário":
                 while(loopINV == true)
                 {
-                    {   //C: Encho o menu do inventário com os itens dentro do inventário do
-                        //jogador.
+                    {   //1.Limpo as opções da lista do menu
+                        AllMenus.InterfaceList.Clear();
+
+                        //2.Encho a lista com os itens
                         foreach(Equipamento item in Player.Inventário)
-                        AllMenus.Inventário.Options.Add(new MenuItem
-                        {
-                            Title= item.Nome,
-                            Value= item.Nome
-                        });
-                    }
+                        AllMenus.InterfaceList.Add(item.Nome);
+
+                        //3.Limpo o menu e lanço a nova lista nele
+                        AllMenus.LimparEInserir();
+                    
                         //INVENTÁRIO - SAÍDA
-                        AllMenus.Inventário.Options.Add(new MenuItem
+                        AllMenus.Interface.Options.Add(new MenuItem
                         {
                             Title= "Voltar",
                             Value= "Voltar"
                         });
                         //OPÇÃO É SELECIONADA
-                        var choiceINV = AllMenus.Inventário.ReadChoice(true);
+                        var choiceINV = AllMenus.Interface.ReadChoice(true);
                         if(choiceINV.Value == "Voltar")
                         {
                             loopINV = false;
                         }
                         else
                         Itens.Stat(choiceINV.Value);
-                        //C: Após todo o processo, limpo o menu do inventário do jogador.
-                        AllMenus.Inventário.Options.Clear();
+                        //C: Após todo o processo, 3.limpo o menu do inventário do jogador.
+                    }
                 }
                 break;
+                //EQUIPAMENTO
                 case "Equipamento":
                 while(loopINV == true)
-                    {
-                       AllMenus.Equipamento.Options.Add(new MenuItem
-                        {
-                            Title= "Arma",
-                            Value= "Arma"
-                        });
-                        AllMenus.Equipamento.Options.Add(new MenuItem
-                        {
-                            Title= "Armadura",
-                            Value= "Armadura"
-                        });
-                         AllMenus.Equipamento.Options.Add(new MenuItem
+                    {//Arma armadura voltar
+                        //1.Limpo as opções da lista do menu
+                        AllMenus.InterfaceList.Clear();
+
+                        //2.Encho a lista com os itens
+                        AllMenus.InterfaceList.Add("Arma");
+                        AllMenus.InterfaceList.Add("Armadura");
+
+
+                        //3.Limpo o menu e lanço a nova lista nele
+                        AllMenus.LimparEInserir();
+
+                        //Adiciono a opção de voltar
+                         AllMenus.Interface.Options.Add(new MenuItem
                         {
                             Title= "Voltar",
                             Value= "Voltar"
                         });
+
                         //EQUIPAMENTO
-                        Console.Clear();
-                        var choiceEquip = AllMenus.Equipamento.ReadChoice(true); 
+                        var choiceEquip = AllMenus.Interface.ReadChoice(true); 
                         if(choiceEquip.Value == "Voltar")
                         {
                             loopINV = false;
@@ -94,26 +97,27 @@ class Program
                         {
                             case "Arma":
                                 {
-                                    //Adiciono as opções de equipamento já existentes:
+                                    //1.Limpo a lista de opções
+                                    AllMenus.InterfaceList.Clear();
+
+                                    //Adiciono as opções de equipamento já existentes à lista:
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Tipo == "Arma")
                                         {
-                                            AllMenus.Inventário.Options.Add(new MenuItem
-                                            {
-                                                Title= item.Nome,
-                                                Value= item.Nome
-                                            });
+                                            AllMenus.InterfaceList.Add(item.Nome);
                                         }
                                     }
+
                                     //Adiciono a opção de nada.
-                                    AllMenus.Inventário.Options.Add(new MenuItem
-                                    {
-                                        Title= "Nada",
-                                        Value="Nada"
-                                    });
+                                    AllMenus.InterfaceList.Add("Nada");
+
+                                    //Adiciono tudo e limpo a interface.
+                                    AllMenus.LimparEInserir();
+
                                     //LEIO O MENU
-                                    var choiceArma = AllMenus.Inventário.ReadChoice(true);
+                                    var choiceArma = AllMenus.Interface.ReadChoice(true);
+
                                     //Valido a resposta nos itens já existentes.
                                     foreach(Equipamento item in Player.Inventário)
                                     {
@@ -122,57 +126,49 @@ class Program
                                             Player.Arma = item;
                                             System.Console.WriteLine($"Você equipou {item.Nome} como arma.");
                                             Console.ReadKey(true);
-                                            AllMenus.Equipamento._settings.IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}";
+                                            AllMenus.Interface._settings.IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}";
                                         }
                                     }
-                                //LIMPA O MENU EQUIPAMENTO E INVENTÁRIO
-                                AllMenus.Inventário.Options.Clear();
-                                AllMenus.Equipamento.Options.Clear();
                                 }
                             break;
                             case "Armadura":
                                 {
+                                    //1.Limpo a lista de opções
+                                    AllMenus.InterfaceList.Clear();
+
+                                    //Adiciono as opções de equipamento já existentes à lista:
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Tipo == "Armadura")
                                         {
-                                            AllMenus.Inventário.Options.Add(new MenuItem
-                                            {
-                                                Title= item.Nome,
-                                                Value= item.Nome
-                                            });
+                                            AllMenus.InterfaceList.Add(item.Nome);
                                         }
                                     }
+
                                     //Adiciono a opção de nada.
-                                    AllMenus.Inventário.Options.Add(new MenuItem
-                                    {
-                                        Title= "Nada",
-                                        Value="Nada"
-                                    });
-                                    var choiceArmadura = AllMenus.Inventário.ReadChoice(true);
+                                    AllMenus.InterfaceList.Add("Nada");
+
+                                    //Adiciono tudo e limpo a interface.
+                                    AllMenus.LimparEInserir();
+
+                                    //Lanço o menu
+                                    var choiceArmadura = AllMenus.Interface.ReadChoice(true);
                                     foreach(Equipamento item in Player.Inventário)
                                     {
                                         if(item.Nome == choiceArmadura.Value)
                                         {
                                             Player.Armadura = item;
                                             System.Console.WriteLine($"Você equipou {item.Nome} como armadura.");
-
+                                            Console.ReadKey(true);
+                                            AllMenus.Interface._settings.IntroText= $"{Player.Arma.Imagem}{Player.Armadura.Imagem}";
                                         }
                                     }
-
-                                //LIMPO O OS MENUS
-                                AllMenus.Inventário.Options.Clear();
-                                AllMenus.Equipamento.Options.Clear();
                                 }
                             break;
                         }
-                        //C: Após todo o processo, limpo o menu de equipamento do jogador.
-                        AllMenus.Equipamento.Options.Clear();
                     }
                 break;
             }
-            //C: Após todo o processo, limpo o menu principal do jogador.
-            AllMenus.MainLoop.Options.Clear();
         }
     }
 }
