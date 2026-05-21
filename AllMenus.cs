@@ -9,12 +9,7 @@ public static class AllMenus
     public static ChoiceMenu Interface;
 
     //LISTA ONDE FICAM AS OPÇÕES DA INTERFACE DO JOGO
-    public static List<string> InterfaceList = new List<string>
-        {
-            "Inventário",
-            "Equipamento"
-        };
-
+    public static List<string> InterfaceList = new List<string>();
     static AllMenus()
     {
         //MAIN LOOP
