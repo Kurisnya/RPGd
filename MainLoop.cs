@@ -60,6 +60,8 @@ class Program
                             loopINV = false;
                         }
                         else
+
+                        //LÓGICA:
                         Itens.Stat(choiceINV.Value);
                         //C: Após todo o processo, 3.limpo o menu do inventário do jogador.
                     }
@@ -68,11 +70,11 @@ class Program
                 //EQUIPAMENTO
                 case "Equipamento":
                 while(loopINV == true)
-                    {//Arma armadura voltar
+                    {   //Arma armadura voltar
                         //1.Limpo as opções da lista do menu
                         AllMenus.InterfaceList.Clear();
 
-                        //2.Encho a lista com os itens
+                        //2.Encho a lista com as opções
                         AllMenus.InterfaceList.Add("Arma");
                         AllMenus.InterfaceList.Add("Armadura");
 
