@@ -38,7 +38,7 @@ namespace ConsoleHelper
                 }
 
                 int x = 0;
-                int y = 15;
+                int y = 20;
                 int currentSelection = 0;
 
                 ConsoleKey key;
