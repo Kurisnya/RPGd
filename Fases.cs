@@ -44,7 +44,7 @@ static public class Fases
     static private void GenerateRoom()
     {
         //PEGA UM NÚMERO ALEATÓRIO
-        int i=2;
+        int i=random.Next(0,1);
 
         //VERIFICA SE ESSA SALA JÁ FOI COMPLETADA
         foreach(FaseProfile fase in fasesStatus)
