@@ -9,14 +9,33 @@ class Program
     {
         //INICIAÇÃO DE ATRIBUTOS PRIMORDIAIS
 
-        //CHAVE BOOLEANA PARA LOOP
-        bool loopINV = true;
-
         //LOOP PRINCIPAL (NEUTRO)
         while(true)
         {   
             //RESET DE CHAVES BOOLEANAS
-            loopINV=true;
+            AllMenus.loop=true;
+
+            AllMenus.Interface._settings.IntroText=@"
+                                                                                 
+                   █████████████                  
+               ████            ███                
+             ███                 ██████           
+            ██                   ██   ██          
+           ██             ███████ ██   ██         
+          ██            ███        ██   █         
+          █           ███           █    █        
+          ████████████              ██   ██       
+        █████  █████                 ██   █       
+        █       ██                    █   ██      
+        █                            ██    ██     
+        ██                         ██████████     
+         ███                 ███████              
+            █████████████████                     
+                                                  
+                                                  ";
+            {
+                
+            }
 
             //MENU PRINCIPAL
             //1.Limpo as opções da lista do menu
@@ -25,6 +44,7 @@ class Program
             //2.Encho a lista com os itens
             AllMenus.InterfaceList.Add("Inventário");
             AllMenus.InterfaceList.Add("Equipamento");
+            AllMenus.InterfaceList.Add("Sala");
 
             //3.Limpo o menu e lanço a nova lista nele
             AllMenus.LimparEInserir();
@@ -35,7 +55,7 @@ class Program
             {
                 //INVENTÁRIO
                 case "Inventário":
-                while(loopINV == true)
+                while(AllMenus.loop==true)
                 {
                     {   //1.Limpo as opções da lista do menu
                         AllMenus.InterfaceList.Clear();
@@ -57,7 +77,7 @@ class Program
                         var choiceINV = AllMenus.Interface.ReadChoice(true);
                         if(choiceINV.Value == "Voltar")
                         {
-                            loopINV = false;
+                            AllMenus.loop = false;
                         }
                         else
 
@@ -69,7 +89,7 @@ class Program
                 break;
                 //EQUIPAMENTO
                 case "Equipamento":
-                while(loopINV == true)
+                while(AllMenus.loop==true)
                     {   //Arma armadura voltar
                         //1.Limpo as opções da lista do menu
                         AllMenus.InterfaceList.Clear();
@@ -93,7 +113,7 @@ class Program
                         var choiceEquip = AllMenus.Interface.ReadChoice(true); 
                         if(choiceEquip.Value == "Voltar")
                         {
-                            loopINV = false;
+                            AllMenus.loop = false;
                         }
                         switch(choiceEquip.Value)
                         {
@@ -168,6 +188,11 @@ class Program
                                 }
                             break;
                         }
+                    }
+                break;
+                case "Sala":
+                    {
+                        Fases.Start();
                     }
                 break;
             }

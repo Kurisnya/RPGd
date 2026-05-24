@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/kuris/Área de trabalho/clear/RPGd/RPGd/RPGd.csproj": {}
+    "/home/kuris/Área de trabalho/clear/RPGd2/RPGd/RPGd.csproj": {}
   },
   "projects": {
-    "/home/kuris/Área de trabalho/clear/RPGd/RPGd/RPGd.csproj": {
+    "/home/kuris/Área de trabalho/clear/RPGd2/RPGd/RPGd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/kuris/Área de trabalho/clear/RPGd/RPGd/RPGd.csproj",
+        "projectUniqueName": "/home/kuris/Área de trabalho/clear/RPGd2/RPGd/RPGd.csproj",
         "projectName": "RPGd",
-        "projectPath": "/home/kuris/Área de trabalho/clear/RPGd/RPGd/RPGd.csproj",
+        "projectPath": "/home/kuris/Área de trabalho/clear/RPGd2/RPGd/RPGd.csproj",
         "packagesPath": "/home/kuris/.nuget/packages/",
-        "outputPath": "/home/kuris/Área de trabalho/clear/RPGd/RPGd/obj/",
+        "outputPath": "/home/kuris/Área de trabalho/clear/RPGd2/RPGd/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/kuris/.nuget/NuGet/NuGet.Config"
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.106/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

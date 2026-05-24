@@ -1,0 +1,71 @@
+// Este é o template básico para criar fases na classe Fases. Estas fases funcionam da seguinte maneira:
+// -> class FaseProfile: essa classe é como uma carteira de identidade de uma fase, contendo informações
+// informações relevantes para o funcionamento da lógica roguelike. A classe-chefe Fases tem uma lista chamada
+// fasesStatus contendo uma FaseProfile(identidade) para cada fase existente no jogo.
+// -> class Fases: as fases reais e sua lógica estão todas presentes nessa classe. A única maneira do jogador
+// passar de fase é guardando a chave da fase na lista chavesPossuídas da classe Fases. O ciclo se resume assim:
+// 
+// JOGADOR ENTRA NA FASE > JOGADOR CONSEGUE A CHAVE > JOGADOR SAI DA FASE E ENTRA NA PRÓXIMA;
+//
+// Desta maneira, para criar uma fase nova, siga o checklist:
+// # Criar FaseProfile no construtor da class Fase [COLABORADOR 1]
+// # Criar opção no switch da Fases [COLABORADOR 2] com a lógica seguindo o modelo abaixo.
+// # Inserir todas os procedimentos necesários para a estrutura das salas funcionar [COLABORADOR 3].
+
+
+// MODELO BÁSICO DE FASE
+
+
+                        //MUDA A ARTE DO BANNER ASCII
+                        AllMenus.Interface._settings.IntroText=@"
+                                                                                          
+      ██          ██       ████    █    ███                       
+    ███       ██  █      ███       █   ███  ██                    
+   ██           ███     ██        █  ██  █████     █████          
+  ██             ███    ████████  █ █   ██  █    ███    █         
+  ████████       █  █     ██      ██    █  ██   ██     ██         
+      ███            █   ███████  █       ██   ██ ██████          
+     ██      █        █                      ██            ██     
+     ██   ████                               █        █████       
+      ████                                         ███            
+                                                         ███████  
+                                                       ███      ██
+                                                      ██         █
+                                                      ██       ██ 
+                                                       ████████   ";
+
+                        //1.Limpo as opções da lista do menu
+                        AllMenus.InterfaceList.Clear();
+
+                        //2.Encho a lista com as opções
+                        AllMenus.InterfaceList.Add("EXEMPLO");
+                        AllMenus.InterfaceList.Add("EXEMPLO 2");
+
+
+                        //3.Limpo o menu e lanço a nova lista nele
+                        AllMenus.LimparEInserir();
+
+                        //Adiciono a opção de voltar
+                         AllMenus.Interface.Options.Add(new MenuItem
+                        {
+                            Title= "Voltar",
+                            Value= "Voltar"
+                        });
+
+                        //OPÇÃO É SELECIONADA
+                        var choiceINV = AllMenus.Interface.ReadChoice(true);
+                        if(choiceINV.Value == "Voltar")
+                        {
+                            AllMenus.loop = false;
+                        }
+                        else
+                        {
+                            switch (choiceINV.Value)
+                            {
+                                case "EXEMPLO":
+                                    {
+                                        Console.WriteLine("Hello World");
+                                    }
+                                break;
+                            }
+                        }

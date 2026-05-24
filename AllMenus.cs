@@ -7,6 +7,7 @@ public static class AllMenus
 {
     //INTERFACE DO JOGO
     public static ChoiceMenu Interface;
+    public static bool loop;
 
     //LISTA ONDE FICAM AS OPÇÕES DA INTERFACE DO JOGO
     public static List<string> InterfaceList = new List<string>();
