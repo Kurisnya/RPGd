@@ -14,6 +14,7 @@ public static class Itens
     public static Equipamento Behelit;
     public static Equipamento EspadaEnferrujada;
     public static Equipamento Caixademarimbondo;
+    public static Equipamento Estilete;
     static Itens()
     {
         Banana = new Equipamento
@@ -68,11 +69,11 @@ public static class Itens
             Tipo = "Arma",
             Atq = 10,
             Def = -5,
-            Descrição = "Um artefato vermelho e ovalado, com marcas que lembram um rosto humano. Dizem que ele tem o poder de conceder desejos, mas a um preço terrível.",
+            Descrição = "Um artefato misterioso vermelho e ovalado, com marcas que lembram um rosto humano. Dizem que ele tem o poder de conceder desejos, mas a um preço terrível.",
             Imagem = @"
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⢿⣣⢹⢽⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣟⡿⣜⢯⡿⠘⡿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢻⣗⡭⠯⠩⣷⣼⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢻⣗⡭⠯⠩⣷⣼⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣕⢾⢲⣦⡂⢦⡗⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣞⣿⠿⢰⡕⡞⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣭⡿⢷⣧⡾⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
@@ -116,6 +117,21 @@ public static class Itens
         "
 
         };
+
+        Estilete = new Equipamento
+        {
+            Nome = "Estilete",
+            Tipo = "Arma",
+            Atq = 1,
+            Descrição = "Um estilete afiado e leve, perfeito para ataques rápidos e precisos. Ideal para quem prefere a furtividade em combate.",
+            Imagem = @"
+    ▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌ 
+    ▐       @@@@@@@               ▌ 
+    ▐  x@@@@@@@@@@@               ▌ 
+    ▐  x                          ▌ 
+     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄x 
+            "
+        };
     }
     //C: O método Stat é onde as descrições e imagens dos itens serão mostrados, caso o jogador queira
     //ver os detalhes de um item específico. Ele é chamado no MainLoop, dentro do loop do inventário, quando
@@ -152,11 +168,18 @@ public static class Itens
                     Console.ReadKey(true);
                 }
                 break;
-        
+
             case "Caixademarimbondo":
                 {
                     System.Console.WriteLine(Caixademarimbondo.Descrição);
                     System.Console.WriteLine(Caixademarimbondo.Imagem);
+                    Console.ReadKey(true);
+                }
+                break;
+            case "Estilete":
+                {
+                    System.Console.WriteLine(Estilete.Descrição);
+                    System.Console.WriteLine(Estilete.Imagem);
                     Console.ReadKey(true);
                 }
                 break;

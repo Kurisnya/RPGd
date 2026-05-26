@@ -19,5 +19,6 @@ public static class Player
         Armadura = Itens.Nada;
         Inventário.Add(Itens.Banana);
         Inventário.Add(Itens.Faca);
+        Inventário.Add(Itens.Behelit);
     }
 }
