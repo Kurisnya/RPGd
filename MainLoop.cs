@@ -6,8 +6,34 @@ class Program
 //C - Comentário
 
     static void Main(string[] args)
-    {
-        //INICIAÇÃO DE ATRIBUTOS PRIMORDIAIS
+    {//inicia e escolhe a raça do jogador
+        AllMenus.Interface._settings.IntroText=@"
+                                                                                 
+                   █████████████                  
+               ████            ███                
+             ███                 ██████           
+            ██                   ██   ██          
+           ██             ███████ ██   ██         
+          ██            ███        ██   █         
+          █           ███           █    █        
+          ████████████              ██   ██       
+        █████  █████                 ██   █       
+        █       ██     RPGD            █   ██      
+        █                            ██    ██     
+        ██                         ██████████     
+         ███                 ███████              
+            █████████████████                     
+                                                  
+         Bem-vindo ao RPGd! Antes de começar, escolha sua raça/classe!                                
+          ";
+        
+        
+        
+    
+        if (Player.DadosRaca == null)
+        {
+            MenuRaca.SelecionarRaca();
+        }
 
         //LOOP PRINCIPAL (NEUTRO)
         while(true)
@@ -26,7 +52,7 @@ class Program
           █           ███           █    █        
           ████████████              ██   ██       
         █████  █████                 ██   █       
-        █       ██                    █   ██      
+        █       ██  RPGD               █   ██      
         █                            ██    ██     
         ██                         ██████████     
          ███                 ███████              
@@ -44,6 +70,7 @@ class Program
             //2.Encho a lista com os itens
             AllMenus.InterfaceList.Add("Inventário");
             AllMenus.InterfaceList.Add("Equipamento");
+            AllMenus.InterfaceList.Add("Status");
             AllMenus.InterfaceList.Add("Sala");
 
             //3.Limpo o menu e lanço a nova lista nele
@@ -188,6 +215,11 @@ class Program
                                 }
                             break;
                         }
+                    }
+                break;
+                case "Status":
+                    {
+                        Player.ExibirStatus();
                     }
                 break;
                 case "Sala":

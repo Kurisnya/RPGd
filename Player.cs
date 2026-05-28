@@ -5,7 +5,23 @@ using ConsoleHelper;
 
 public static class Player
 {
+    // INFORMAÇÕES BÁSICAS
+    static public TipoRaca RacaEscolhida { get; set; }
+    static public DadosRaca DadosRaca { get; set; }
+    
+    // ATRIBUTOS
+    static public int Forca { get; set; }
+    static public int Destreza { get; set; }
+    static public int Constituicao { get; set; }
+    static public int Inteligencia { get; set; }
+    static public int Sabedoria { get; set; }
+    static public int Carisma { get; set; }
+    
+    // VIDA
+    static public int VidaMaxima { get; set; }
+    static public int VidaAtual { get; set; }
 
+    // EQUIPAMENTOS
     static public Equipamento Arma;
     static public Equipamento Armadura;
 
@@ -20,5 +36,51 @@ public static class Player
         Inventário.Add(Itens.Banana);
         Inventário.Add(Itens.Faca);
         Inventário.Add(Itens.Behelit);
+    }
+    
+    // inicializa com a raça escolhida
+    static public void InicializarComRaca(TipoRaca raca)
+    {
+        RacaEscolhida = raca;
+        DadosRaca = Racas.ObterRaca(raca);
+        
+        Forca = DadosRaca.Forca;
+        //Destreza = DadosRaca.Destreza;  ==========SÃO IDEIAS Q PEGUEI COM I.A, ACHO MELHOR NAO COLOCAR NO CODIGO PRA NÃO FICAR COMPLEXO======
+        //Constituicao = DadosRaca.Constituicao;
+        //Inteligencia = DadosRaca.Inteligencia;
+        //Sabedoria = DadosRaca.Sabedoria;
+        //Carisma = DadosRaca.Carisma;
+        
+        VidaMaxima = DadosRaca.VidaBase;
+        VidaAtual = DadosRaca.VidaBase;
+    }
+    
+    // Exibe o status do jogador
+    static public void ExibirStatus()
+    {
+        System.Console.Clear();
+        System.Console.WriteLine($"\n═══════════════════════════════════════");
+        System.Console.WriteLine($"           STATUS DO JOGADOR");
+        System.Console.WriteLine($"═══════════════════════════════════════");
+        System.Console.WriteLine($"\nRAÇA: {DadosRaca?.Nome ?? "Não definida"}\n");
+        
+        System.Console.WriteLine("ATRIBUTOS:");
+        System.Console.WriteLine($"  FOR: {Forca:D2}  "); //DEX: {Destreza:D2}  CON: {Constituicao:D2}
+        //System.Console.WriteLine($"  INT: {Inteligencia:D2}  SAB: {Sabedoria:D2}  CAR: {Carisma:D2}");
+        
+        System.Console.WriteLine($"\nVIDA: {VidaAtual}/{VidaMaxima}");
+        
+        if (DadosRaca?.Habilidades.Count > 0)
+        {
+            System.Console.WriteLine("\nHABILIDADES:");
+            foreach (var hab in DadosRaca.Habilidades)
+            {
+                System.Console.WriteLine($"  • {hab}");
+            }
+        }
+        
+        System.Console.WriteLine($"\n═══════════════════════════════════════");
+        System.Console.WriteLine("Pressione qualquer tecla para continuar...");
+        System.Console.ReadKey(true);
     }
 }
