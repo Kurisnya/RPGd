@@ -26,8 +26,8 @@ public class DadosRaca
     // Vida base
     public int VidaBase { get; set; }
 
-    // Habilidades especiais
-    public List<string> Habilidades { get; set; } = new List<string>(); //skills unicas
+    // Habilidades especiais (cada uma desbloqueia em um nível)
+    public List<Habilidade> Habilidades { get; set; } = new List<Habilidade>(); //skills unicas
 }
 
 public static class Racas
@@ -66,10 +66,10 @@ public static class Racas
                 //Sabedoria = 13,
                 //Carisma = 11,
                 VidaBase = 30,
-                Habilidades = new List<string>
+                Habilidades = new List<Habilidade>
                 {
-                    " Gremorio - Causa 2d6 de dano magico",
-                    "Armadura Arcana - +1 de hp ao usar gremorio",
+                    new Habilidade { Nome = "Gremorio", NivelNecessario = 1, Descricao = "Causa 2d6 de dano magico" },
+                    new Habilidade { Nome = "Armadura Arcana", NivelNecessario = 2, Descricao = "+1 de hp ao usar gremorio" },
                 }
             }
         },
@@ -103,11 +103,11 @@ public static class Racas
                 //Sabedoria = 12,
                 //Carisma = 13,
                 VidaBase = 50,
-                Habilidades = new List<string>
+                Habilidades = new List<Habilidade>
                 {
-                    "Espada Divina Escanor - Causa 2d6 de dano",
-                    "Escudo Protetor - Reduz dano e/ou aumenta hp em 2",
-                    "Bigode Masculo - Penteia seu bigode incrivel, o inimigo se distrai e perde 1 de ataque"
+                    new Habilidade { Nome = "Espada Divina Escanor", NivelNecessario = 1, Descricao = "Causa 2d6 de dano" },
+                    new Habilidade { Nome = "Escudo Protetor", NivelNecessario = 2, Descricao = "Reduz dano e/ou aumenta hp em 2" },
+                    new Habilidade { Nome = "Bigode Masculo", NivelNecessario = 3, Descricao = "Penteia seu bigode incrivel, o inimigo se distrai e perde 1 de ataque" }
                 }
             }
         },
@@ -137,11 +137,11 @@ public static class Racas
                 //Sabedoria = 10,
                 //Carisma = 14,
                 VidaBase = 35,
-                Habilidades = new List<string>
+                Habilidades = new List<Habilidade>
                 {
-                    "Sangue Suga - Rouba hp do inimigo (1d6)",
-                    "Maldição Sombria - Reduz ataque do inimigo em 1",
-                    "Exército dos Mortos - Invoca um zumbi para lutar com você (hp 2, atk 2)"
+                    new Habilidade { Nome = "Sangue Suga", NivelNecessario = 1, Descricao = "Rouba hp do inimigo (1d6)" },
+                    new Habilidade { Nome = "Maldição Sombria", NivelNecessario = 2, Descricao = "Reduz ataque do inimigo em 1" },
+                    new Habilidade { Nome = "Exército dos Mortos", NivelNecessario = 3, Descricao = "Invoca um zumbi para lutar com você (hp 2, atk 2)" }
                 }
             }
         },
@@ -174,11 +174,11 @@ public static class Racas
                 //Sabedoria = 10,
                 //Carisma = 8,
                 VidaBase = 25,
-                Habilidades = new List<string>
+                Habilidades = new List<Habilidade>
                 {
-                    "Agilidade Goblin - Corre e evita o próximo ataque",
-                    //"Ataque Rápido - Ataque adicional uma vez por turno",
-                    //"Sorte - Chance de 25% de causar dano crítico (2x dano) a cada ataque"
+                    new Habilidade { Nome = "Agilidade Goblin", NivelNecessario = 1, Descricao = "Corre e evita o próximo ataque" },
+                    //new Habilidade { Nome = "Ataque Rápido", NivelNecessario = 2, Descricao = "Ataque adicional uma vez por turno" },
+                    //new Habilidade { Nome = "Sorte", NivelNecessario = 3, Descricao = "Chance de 25% de causar dano crítico (2x dano) a cada ataque" }
                 }
             }
         }
@@ -213,7 +213,7 @@ public static class Racas
         System.Console.WriteLine("\nHABILIDADES:");
         foreach (var hab in raca.Habilidades)
         {
-            System.Console.WriteLine($"  • {hab}");
+            System.Console.WriteLine($"  • {hab.Nome} (Nível {hab.NivelNecessario}) - {hab.Descricao}");
         }
 
         System.Console.WriteLine("\n═══════════════════════════════════════");

@@ -72,6 +72,8 @@ static public class Fases
                 if(fase.chave==chave)
                 fase.isClear=true;
             }
+            //CONCLUIR A SALA RECOMPENSA O JOGADOR COM EXPERIÊNCIA (PROGRESSÃO DE NÍVEL)
+            Player.GanharExperiencia(50);
             Console.ReadKey();
         }
         else
