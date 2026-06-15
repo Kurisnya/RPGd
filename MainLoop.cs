@@ -88,7 +88,7 @@ class Program
                         AllMenus.InterfaceList.Clear();
 
                         //2.Encho a lista com os itens
-                        foreach(Equipamento item in Player.Inventário)
+                        foreach(ObjetoFísico item in Player.Inventário)
                         AllMenus.InterfaceList.Add(item.Nome);
 
                         //3.Limpo o menu e lanço a nova lista nele
@@ -106,11 +106,10 @@ class Program
                         {
                             AllMenus.loop = false;
                         }
-                        else
-
-                        //LÓGICA:
-                        Itens.Stat(choiceINV.Value);
-                        //C: Após todo o processo, 3.limpo o menu do inventário do jogador.
+                            else
+                            {
+                                Itens.BuscarEDescreverEquipamento(choiceINV.Value);
+                            }
                     }
                 }
                 break;
@@ -150,12 +149,10 @@ class Program
                                     AllMenus.InterfaceList.Clear();
 
                                     //Adiciono as opções de equipamento já existentes à lista:
-                                    foreach(Equipamento item in Player.Inventário)
+                                    foreach(ObjetoFísico item in Player.Inventário)
                                     {
-                                        if(item.Tipo == "Arma")
-                                        {
+                                        if(item is Arma)
                                             AllMenus.InterfaceList.Add(item.Nome);
-                                        }
                                     }
 
                                     //Adiciono a opção de nada.
@@ -168,7 +165,7 @@ class Program
                                     var choiceArma = AllMenus.Interface.ReadChoice(true);
 
                                     //Valido a resposta nos itens já existentes.
-                                    foreach(Equipamento item in Player.Inventário)
+                                    foreach(ObjetoFísico item in Player.Inventário)
                                     {
                                         if(item.Nome == choiceArma.Value)
                                         {
@@ -186,9 +183,9 @@ class Program
                                     AllMenus.InterfaceList.Clear();
 
                                     //Adiciono as opções de equipamento já existentes à lista:
-                                    foreach(Equipamento item in Player.Inventário)
+                                    foreach(ObjetoFísico item in Player.Inventário)
                                     {
-                                        if(item.Tipo == "Armadura")
+                                        if(item is Armadura)
                                         {
                                             AllMenus.InterfaceList.Add(item.Nome);
                                         }
@@ -202,7 +199,7 @@ class Program
 
                                     //Lanço o menu
                                     var choiceArmadura = AllMenus.Interface.ReadChoice(true);
-                                    foreach(Equipamento item in Player.Inventário)
+                                    foreach(ObjetoFísico item in Player.Inventário)
                                     {
                                         if(item.Nome == choiceArmadura.Value)
                                         {
