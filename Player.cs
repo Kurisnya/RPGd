@@ -22,20 +22,21 @@ public static class Player
     static public int VidaAtual { get; set; }
 
     // EQUIPAMENTOS
-    static public Equipamento Arma;
-    static public Equipamento Armadura;
+    static public ObjetoFísico Arma;
+    static public ObjetoFísico Armadura;
 
-    static public List<Equipamento> Inventário = new List<Equipamento>();
+    static public List<ObjetoFísico> Inventário = new List<ObjetoFísico>();
     
 
     //C: O player começa com uma banana no seu inventário.
     static Player()
     {
-        Arma = Itens.Nada;
-        Armadura = Itens.Nada;
-        Inventário.Add(Itens.Banana);
-        Inventário.Add(Itens.Faca);
-        Inventário.Add(Itens.Behelit);
+        //Puxa o item de dentro da lista de itens
+        Arma = Itens.ItensLista.Find(x => x.Nome == "Nada");
+        Armadura = Itens.ItensLista.Find(x => x.Nome == "Nada");
+
+        Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Adaga"));
+        Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Armadura"));
     }
     
     // inicializa com a raça escolhida
