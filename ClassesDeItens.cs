@@ -102,6 +102,87 @@ public class EspadaEnferrujada : Arma
     }
 }
 
+public class EspadaReta : Arma
+{
+    public EspadaReta()
+    {
+        Nome = "Espada Reta";
+        Descrição = "Uma espada reta, bem cuidada e afiada o suficiente para uso em campo de batalha";
+        ataque = 7;
+        Imagem = @"
+█████████████████████████████████████████████
+█                                           █
+█                                           █
+█          />                               █
+█ ()      //-----------------------------(  █
+█(*)OXOXO(*>                              \ █
+█ ()      \\-------------------------------)█
+█          \>                               █
+█                                           █
+█████████████████████████████████████████████";
+
+    }
+
+    public override double atacar()
+    {
+        return ataque;
+    }
+}
+
+public class Machado : Arma
+{
+    public Machado()
+    {
+        Nome = "Machado";
+        Descrição = "Um machado feito para cortar madeira";
+        ataque = 6;
+        Imagem = @"
+█████████████████████████████████████████████
+█                                           █
+█   ____________________________.---.______ █
+█  ()__________________________(_o o_(____()█
+█                          .___.'. .'.___.  █
+█                          \ o    Y    o /  █
+█                           \ \__   __/ /   █
+█                            '.__'-'__.'    █
+█                                '''        █
+█████████████████████████████████████████████";
+
+    }
+
+    public override double atacar()
+    {
+        return ataque;
+    }
+}
+
+public class Arco : Arma
+{
+    public Arco()
+    {
+        Nome = "Arco";
+        Descrição = "Um arco feito de madeira. Permite disparar flechas a distância";
+        ataque = 6;
+        Imagem = @"
+█████████████████████████████████████████████
+█                                           █
+█                 /════════\                █
+█              ///          \\\             █
+█           ///                \\\          █
+█         ///                    \\\        █
+█     ////                          \\\\    █
+█    /__________________________________\   █
+█                                           █
+█████████████████████████████████████████████";
+
+    }
+
+    public override double atacar()
+    {
+        return ataque;
+    }
+}
+
 public class Behelit : Arma
 {
     public Behelit()
