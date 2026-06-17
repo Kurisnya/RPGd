@@ -95,6 +95,8 @@ static public class Fases
             //A PRIMEIRA SALA
             case 1:
                 {
+                    Combate.monstros.Add(new Esqueleto());
+                    Combate.CombatLoop();
                     string chave = "Chave1";
                     while (AllMenus.loop == true)
                     {

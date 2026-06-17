@@ -18,7 +18,7 @@ public static class Player
     static public int Carisma { get; set; }
     
     // VIDA
-    static public int VidaMaxima { get; set; }
+    static public double VidaMaxima { get; set; }
     static public int VidaAtual { get; set; }
 
     // EQUIPAMENTOS
@@ -27,6 +27,8 @@ public static class Player
 
     static public List<ObjetoFísico> Inventário = new List<ObjetoFísico>();
     
+    // SKILLS
+    public static List<Skill> InventárioSkills = new List<Skill>();
 
     //C: O player começa com uma banana no seu inventário.
     static Player()
@@ -34,9 +36,11 @@ public static class Player
         //Puxa o item de dentro da lista de itens
         Arma = Itens.ItensLista.Find(x => x.Nome == "Nada");
         Armadura = Itens.ItensLista.Find(x => x.Nome == "Nada");
-
+        //Enchendo o inventário com itens já existentes
         Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Adaga"));
-        Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Armadura"));
+        Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Trapos"));
+        //Enchendo o inventário de Ações (skills)
+        InventárioSkills.Add(new Atacar());
     }
     
     // inicializa com a raça escolhida
