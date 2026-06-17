@@ -25,7 +25,72 @@ public abstract class Armadura : ObjetoFísico
 
 
 //OBJETOS REAIS
-//ARMAS
+//ARMAS E ARMADURAS
+
+public class Trapos : Armadura
+{
+    public Trapos()
+    {
+        defesa= 0;
+        Imagem=@"
+█████████████████████████████████████████████
+█       ▒▒▒▒▒▒                     ▒        █
+█  ▒▒▒ ▒▒       █▀▀▀▀▄▄▄▄▄▄▄▄▀▀█▀  ▒  ▒▒▒   █
+█  ▒▒▒    ▀▀█▀▀▀  ▒▒  ▒    ▒ ▒ ▀█  ▒▒▒ ▒▒▒▒▒█
+█ ▒▒▒▒▒▒   ▀▀▀█▀▀ ▒  ▒▒  ▒▒▒ ▒ █▀      ▒  ▒ █
+█    ▒▒     ▀█▀ ▀▀  ▒▒   ▒   ▒▒█▀     ▒  ▒▒ █
+█   ▒▒▒▒   ▀██▀▀█▀▒▒▒ █▀█ █▀▀█  ▀█    ▒▒▒▒  █
+█   ▒▒     ▀▀   █  ▀█▀  ▀ █   ▀▀▀▀▀ ▒▒▒ ▒▒  █
+█   ▒▒▒         ▀▀▀▀     ▀▀   ▒▒▒▒▒▒▒       █
+█████████████████████████████████████████████";
+        Nome= "Trapos";
+        Descrição= "Um monte de trapos que você coloca sobre seu corpo para se aquecer. Não te protege de nada.";
+    }
+}
+
+public class Capacete : Armadura
+{
+    public Capacete()
+    {
+        defesa= 1;
+        Imagem=@"
+        Nome= "Capacete";
+        Descrição= "Um capacete de ferro, perfeito para evitar concussões.";
+█████████████████████████████████████████████
+█                                           █
+█               (~~~~~~~~~~~)               █
+█              (▓▓▓▓▓▓▓▓▓▓▓▓▓)              █
+█             ⌠▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓⌠             █
+█             I▓▓▓  ▓▓▓▓▓  ▓▓▓I             █
+█             I▓▓▓▓▓▓   ▓▓▓▓▓▓I             █
+█                                           █
+█                                           █
+█████████████████████████████████████████████";
+    }
+}
+
+public class EscudoSimples : Armadura
+{
+    public EscudoSimples()
+    {
+        defesa= 1;
+        Imagem=@"
+        Nome= "Escudo Simples";
+        Descrição= "Um escudo simples feito de madeira, reforçado com couro.";
+█████████████████████████████████████████████
+█                                           █
+█                 ooooooooo                 █
+█               oo▒▒x▒▒▒x▒▒oo               █
+█              o▒▒▒▒▒x▒x▒▒▒▒▒o              █
+█             o▒▒▒▒▒▒▒o▒▒▒▒▒▒▒o             █
+█              o▒▒▒▒▒x▒x▒▒▒▒▒o              █
+█               oo▒▒x▒▒▒x▒▒oo               █
+█                 ooooooooo                 █
+█████████████████████████████████████████████";
+    }
+}
+
+
 public class Adaga : Arma
 {
     public Adaga()
@@ -50,27 +115,6 @@ public class Adaga : Arma
     {
 
         return ataque;
-    }
-}
-
-public class Trapos : Armadura
-{
-    public Trapos()
-    {
-        defesa= 0;
-        Imagem=@"
-█████████████████████████████████████████████
-█       ▒▒▒▒▒▒                     ▒        █
-█  ▒▒▒ ▒▒       █▀▀▀▀▄▄▄▄▄▄▄▄▀▀█▀  ▒  ▒▒▒   █
-█  ▒▒▒    ▀▀█▀▀▀  ▒▒  ▒    ▒ ▒ ▀█  ▒▒▒ ▒▒▒▒▒█
-█ ▒▒▒▒▒▒   ▀▀▀█▀▀ ▒  ▒▒  ▒▒▒ ▒ █▀      ▒  ▒ █
-█    ▒▒     ▀█▀ ▀▀  ▒▒   ▒   ▒▒█▀     ▒  ▒▒ █
-█   ▒▒▒▒   ▀██▀▀█▀▒▒▒ █▀█ █▀▀█  ▀█    ▒▒▒▒  █
-█   ▒▒     ▀▀   █  ▀█▀  ▀ █   ▀▀▀▀▀ ▒▒▒ ▒▒  █
-█   ▒▒▒         ▀▀▀▀     ▀▀   ▒▒▒▒▒▒▒       █
-█████████████████████████████████████████████";
-        Nome= "Trapos";
-        Descrição= "Um monte de trapos que você coloca sobre seu corpo para se aquecer. Não te protege de nada.";
     }
 }
 
