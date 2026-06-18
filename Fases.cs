@@ -1,6 +1,6 @@
 namespace RPGd;
 //ATENÇÃO: Se você quiser colaborar com esta parte do código criando fases, consulte o Templates.txt
-//e siga as linhas com a palabra chave [COLABORADOR].
+//e siga as linhas com a palavra chave [COLABORADOR].
 using System.Data.Common;
 using System.Runtime.CompilerServices;
 using ConsoleHelper;

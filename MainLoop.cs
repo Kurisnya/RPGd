@@ -6,7 +6,9 @@ class Program
 //C - Comentário
 
     static void Main(string[] args)
-    {//inicia e escolhe a raça do jogador
+    {
+        
+        //inicia e escolhe a raça do jogador
         AllMenus.Interface._settings.IntroText=@"
                                                                                  
                    █████████████                  

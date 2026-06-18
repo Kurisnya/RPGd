@@ -1,4 +1,6 @@
 namespace RPGd;
+
+using System.Security.Cryptography.X509Certificates;
 using ConsoleHelper;
 
 //DECLARAÇÃO DA CLASSE ABSTRATA DE SKILL
@@ -30,10 +32,14 @@ public class Atacar : Skill
 public abstract class Monstro
 {
     public string Nome;
+    public int XP;
     public double VidaMaxima;
+    public double VidaAtual;
     public double Defesa;
     public Random random = new Random();
 
+    public string Imagem;
+    public abstract void OnDeath();
     public abstract double RollAction();
 }
 
@@ -43,17 +49,43 @@ public class Esqueleto : Monstro
     public Esqueleto()
     {
         Nome= "Esqueleto";
-        VidaMaxima= 100;
+        VidaMaxima= 15;
+        VidaAtual = 15;
+        XP = 10;
         Defesa = 0;
+        Imagem = @"
+██████████████████████████████████████████████
+█    ▓ ▓  ▓   ▄██▀▀▒▀▒▀▀▒▒▒████        ▓▓   █
+█ ▓▓▓▓  ▓▓▓  █▀▀▀      ▒▒▒▒█████ ▓▓▓▓▓  ▓ ▓ █
+█ ▓▓ ▓ ▓▓▓ ██▒     ▒   ▒ ▄▄▄▄███▄  ▓▓▓▓ ▓▓▓▓█
+█  ▓▓▓▓▓ ▄█▀▒▒▒▒▒▒▒▒▒   █▀    ▀██   ▓▓ ▓▓▓ ▓█
+█ ▓▓ ▓▓ ██▒▒ ▒ ▒▒▒ ▄▄▄█▀▀      ██   ▓▓▓ ▓▓ ▓█
+█ ▓ ▓▓ ▄█▒▒▒▒▒▒▒▒ ▄███    █  █ █▀   ▓▓▓ ▓▓▓▓█
+█ ▓▓▓▓▓██▒▒▒▒▒▒  ▄██   █▀█▀  ▀██    ▓▓▓▓▓ ▓▓█
+█ ▓▓▓▓▓██▒▒▒▒▒▒ ███▄ ▀▀▀▀▀▒ ▄██▀    ▓ ▓▓▓ ▓▓█
+█  ▓▓ ██▒▒▒▒▒▒▒ ███  ▄    ▒▄██▄   ▓▓▓▓▓▓ ▓▓▓█
+█ ▓▓▓ ██▒▄▄▄▄▒▒ ▀█████ ▄ ▄ ▄ ▄▓   ▓ ▓ ▓ ▓▓▓▓█
+█  ▓▓ █▀▀▓▓▓ ▀█▄▄█░░░░▀▀▀█▀▀▀█▀  ▓▓▓▓▓  ▓▓▓ █
+█  ▓███▓▓▓▓▓▓▓▓█░░░▄░▄░▄░▄▀█▓████ ▓▓▓▓ ▓▓▓  █
+█ ███▓▓▓▓▓▓▓▓▓▓█▀▀▀▀▀▀▀▀▀▀▀▀█▓▓▓█████       █
+█████████████████████████████████████████████";
     }
 
+    public override void OnDeath()
+    {
+        Player.XP = this.XP;
+    }
     public override double RollAction()
     {
         int roll = base.random.Next(1,2);
         switch (roll)
         {
             case 1:
-                return 3;                    
+                {
+                AllMenus.Interface._settings.IntroText=Imagem;
+                System.Console.WriteLine("O esqueleto te ataca com suas garras.");
+                return 3;
+                } 
             case 2:
                 {
                 this.VidaMaxima += 2;
@@ -64,9 +96,18 @@ public class Esqueleto : Monstro
     }
 }
 
-
 public static class Combate
 {
+//-------------------------------MÉTODOS DO COMBATE---------------------------------------------------------
+    //VERIFICAR SE TEM ALGUM MONSTRO VIVO
+    private static int VerificarInimigosVivos(Monstro x)
+    {
+        if(x.VidaAtual > 0)
+        return 1;
+        else
+        return 0;
+    }
+
     //LISTA DE MONSTROS QUE SERÃO COMBATIDOS(OS MONSTROS FICAM ARMAZENADOS NELA)
     public static List<Monstro> monstros = new List<Monstro>();
     static double DANO(double atq, double def)
@@ -79,6 +120,14 @@ public static class Combate
     {
         while (true)
         {
+            AllMenus.Interface._settings.IntroText = @$"
+█████████████████████████████████████████████
+█                                           █
+█   Nome: {Player.Nome}           Vida: {Player.VidaAtual}/{Player.VidaMaxima}
+█   Arma: {Player.Arma.Nome}      XP: {Player.XP}
+█   Armadura: {Player.Armadura.Nome}
+█                                           █
+█████████████████████████████████████████████";
             //ESCOLHENDO A AÇÃO (SKILL)
             //1.Limpo as opções da lista do menu
             AllMenus.InterfaceList.Clear();
@@ -95,14 +144,15 @@ public static class Combate
             //LANÇO O MENU
             var choiceSkill = AllMenus.Interface.ReadChoice(true);
 
-            //ESCOLHENDO O ALVO
+
+            //ESCOLHENDO O ALVO (MONSTRO)
             //1.Limpo as opções da lista do menu
             AllMenus.InterfaceList.Clear();
 
             //2.Encho a lista com as opções
             foreach(Monstro x in monstros)
             {
-                AllMenus.InterfaceList.Add(x.Nome);
+                AllMenus.InterfaceList.Add($"{x.Nome}   #Vida:{x.VidaAtual}/{x.VidaMaxima}");
             }
 
             //3.Limpo o menu e lanço a nova lista nele
@@ -115,47 +165,53 @@ public static class Combate
             foreach (Skill x in Player.InventárioSkills)
             {
                 if(x.Nome == choiceSkill.Value)
-                {
-                    monstros.Find(x => x.Nome == choiceMonstro.Value).VidaMaxima -= DANO(x.Action(), monstros.Find(x => x.Nome == choiceMonstro.Value).Defesa);
+                {   
+                    int index = choiceMonstro.Value.IndexOf('#') - 3;
+                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(9)).Defesa);
                 }
             }
 
-            //VERIFICO SE ALGUM MONSTRO MORREU
+            
+            //VERIFICA SE TEM ALGUM MONSTRO RESTANTE
+
+            int res = 0;
             foreach(Monstro x in monstros)
             {
-                if(x.VidaMaxima <= 0)
-                {
-                    monstros.Remove(x);
-                }
+                res = VerificarInimigosVivos(x);
             }
-            //VERIFICA SE TEM ALGUM MONSTRO RESTANTE
-            if(monstros.Count() == 0)
+            if(res == 0)
             {
-                System.Console.WriteLine("Você venceu.");
-                Console.ReadKey();
+                System.Console.WriteLine("Você venceu!");
+                Console.ReadKey(true);
                 break;
             }
 
             //TURNO DOS INIMIGOS
             foreach(Monstro x in monstros)
             {
-                Player.VidaMaxima -= x.RollAction();
+                if(x.VidaMaxima > 0)
+                Player.VidaAtual -= x.RollAction();
+                Thread.Sleep(2000);
+                Console.ReadKey();
             }
 
             //VERIFICA SE O PLAYER MORREU
             if(Player.VidaAtual <= 0)
             {
                 System.Console.WriteLine("Você morreu...");
+                Environment.Exit(0);
                 Console.ReadKey();
                 break;
             }
 
+            //COLETANDO RECOMPENSAS
             foreach(Monstro x in monstros)
             {
-                System.Console.WriteLine(x.VidaMaxima);
+                x.OnDeath();
             }
             Console.ReadKey(true);
         }
+        monstros.Clear();
     }
 
 }

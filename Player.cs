@@ -6,6 +6,8 @@ using ConsoleHelper;
 public static class Player
 {
     // INFORMAÇÕES BÁSICAS
+    static public string Nome;
+    static public int XP=0;
     static public TipoRaca RacaEscolhida { get; set; }
     static public DadosRaca DadosRaca { get; set; }
     
@@ -19,7 +21,7 @@ public static class Player
     
     // VIDA
     static public double VidaMaxima { get; set; }
-    static public int VidaAtual { get; set; }
+    static public double VidaAtual { get; set; }
 
     // EQUIPAMENTOS
     static public ObjetoFísico Arma;
