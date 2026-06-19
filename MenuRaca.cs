@@ -20,8 +20,6 @@ public static class MenuRaca
             AllMenus.InterfaceList.Clear();
             AllMenus.InterfaceList.Add("Mago");
             AllMenus.InterfaceList.Add("Cavaleiro");
-            AllMenus.InterfaceList.Add("Necromante");
-            AllMenus.InterfaceList.Add("Goblin");
             
             AllMenus.LimparEInserir();
             

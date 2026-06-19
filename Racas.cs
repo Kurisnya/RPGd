@@ -203,7 +203,7 @@ public static class Racas
         System.Console.WriteLine("\nHABILIDADES:");
         foreach (var hab in raca.Habilidades)
         {
-            System.Console.WriteLine($"  • {hab}");
+            System.Console.WriteLine($"  • {hab.Nome}");
         }
 
         System.Console.WriteLine("\n═══════════════════════════════════════");

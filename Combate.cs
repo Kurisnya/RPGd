@@ -156,9 +156,9 @@ public class Esqueleto : Monstro
 
 public class Goblin : Monstro
 {
-    public Goblin()
+    public Goblin(string x)
     {
-        Nome = "Goblin";
+        Nome = x;
         VidaMaxima = 20;
         VidaAtual = 20;
         XP = 15;
@@ -318,7 +318,7 @@ public class Zood : Monstro
     public override double RollAction()
     {
         Console.WriteLine("O Zood ataca com seu corpo demoniaco!");
-        return 2;
+        return 7;
     }
 }
 
@@ -382,6 +382,7 @@ public static class Combate
             y += " [BRN]";
         return y;
     }
+
     //LISTA DE MONSTROS QUE SERÃO COMBATIDOS(OS MONSTROS FICAM ARMAZENADOS NELA)
     public static List<Monstro> monstros = new List<Monstro>();
     static double DANO(double atq, double def)
@@ -441,7 +442,7 @@ public static class Combate
                 if(x.Nome == choiceSkill.Value)
                 {   
                     int index = choiceMonstro.Value.IndexOf('#') - 3;
-                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index))), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(9)).Defesa);
+                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index))), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).Defesa);
                     monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).PassTurn();
                 }
             }
@@ -471,15 +472,18 @@ public static class Combate
             {
 
                 double y;
-                if(x.VidaMaxima > 0)
-                if(Player.Armadura is Armadura armaduraTemp)
+                if(x.VidaAtual > 0)
+                {
+                    if(Player.Armadura is Armadura armaduraTemp)
                     {
                         y = armaduraTemp.Defesa;
                         Player.VidaAtual -= x.RollAction() - y;
                         System.Console.WriteLine(x.Imagem);
                         Thread.Sleep(1000);
                         Console.ReadKey(true);
-                    }
+                    } 
+                }
+
                 
             }
 
