@@ -96,6 +96,96 @@ public class Esqueleto : Monstro
     }
 }
 
+public class Goblin : Monstro
+{
+    public Goblin()
+    {
+        Nome = "Goblin";
+        VidaMaxima = 20;
+        VidaAtual = 20;
+        XP = 15;
+        Defesa = 1;
+        Imagem = @"
+████████████████████████████████████████
+█               ,      ,               █
+█              /(.-""-.)\              █
+█          |\  \/      \/  /|          █
+█          | \ / =.  .= \ / |          █
+█          \( \   o\/o   / )/          █
+█           \_, '-/  \-' ,_/           █
+█             /   \__/   \             █
+█             \ \__/\__/ /             █
+█           ___\ \|--|/ /___           █
+█         /`    \      /    `\         █
+█        /       '----'       \        █
+████████████████████████████████████████";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("O goblin ataca com uma adaga!");
+        return 5;
+    }
+}
+
+public class Fantasma : Monstro
+{
+    public Fantasma()
+    {
+        Nome = "Fantasma";
+        VidaMaxima = 25;
+        VidaAtual = 25;
+        XP = 30;
+        Defesa = 0;
+        Imagem = @"
+████████████████████████████████████████
+█          .'``'.      ...             █
+█         :o  o `....'`  ;             █
+█          `. O         :'             █
+█           `':          `.            █
+█            `:.          `.           █
+█            : `.         `.           █
+█           `..'`...       `.          █
+█                  `...     `.         █
+█                     ``...  `.        █
+█                         `````.       █
+████████████████████████████████████████";
+    }
+
+    public override void OnDeath()
+    {
+        Console.WriteLine("O fantasma se dissipa no ar...");
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        int roll = base.random.Next(1, 4);
+
+        switch (roll)
+        {
+            case 1:
+                Console.WriteLine("O fantasma atravessa sua armadura e causa dano espiritual!");
+                return 8;
+
+            case 2:
+                Console.WriteLine("O fantasma emite um grito assustador!");
+                return 6;
+
+            case 3:
+                Console.WriteLine("O fantasma desaparece e reaparece atrás de você!");
+                return 10;
+        }
+
+        return 0;
+    }
+}
+
 public static class Combate
 {
 //-------------------------------MÉTODOS DO COMBATE---------------------------------------------------------
