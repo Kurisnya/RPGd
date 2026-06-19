@@ -37,12 +37,10 @@ public static class Player
     {
         //Puxa o item de dentro da lista de itens
         Arma = Itens.ItensLista.Find(x => x.Nome == "Nada");
-        Armadura = Itens.ItensLista.Find(x => x.Nome == "Nada");
+        Armadura = Itens.ItensLista.Find(x => x.Nome == "Trapos");
         //Enchendo o inventário com itens já existentes
         Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Adaga"));
         Inventário.Add(Itens.ItensLista.Find(x => x.Nome == "Trapos"));
-        //Enchendo o inventário de Ações (skills)
-        InventárioSkills.Add(new Atacar());
     }
     
     // inicializa com a raça escolhida
@@ -60,6 +58,12 @@ public static class Player
         
         VidaMaxima = DadosRaca.VidaBase;
         VidaAtual = DadosRaca.VidaBase;
+
+        //O PLAYER RECEBE AS SKILLS DA RAÇA
+        foreach(Skill x in DadosRaca.Habilidades)
+        {
+            Player.InventárioSkills.Add(x);
+        }
     }
     
     // Exibe o status do jogador

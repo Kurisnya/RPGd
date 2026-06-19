@@ -17,17 +17,12 @@ public class DadosRaca
 
     // Atributos base
     public int Forca { get; set; }
-    //public int Destreza { get; set; }
-    //public int Constituicao { get; set; }
-    //public int Inteligencia { get; set; }
-    //public int Sabedoria { get; set; }
-    //public int Carisma { get; set; }
 
     // Vida base
     public int VidaBase { get; set; }
 
     // Habilidades especiais
-    public List<string> Habilidades { get; set; } = new List<string>(); //skills unicas
+    public List<Skill> Habilidades { get; set; } = new List<Skill>(); //skills unicas
 }
 
 public static class Racas
@@ -66,10 +61,10 @@ public static class Racas
                 //Sabedoria = 13,
                 //Carisma = 11,
                 VidaBase = 30,
-                Habilidades = new List<string>
+                Habilidades = new List<Skill>
                 {
-                    " Gremorio - Causa 2d6 de dano magico",
-                    "Armadura Arcana - +1 de hp ao usar gremorio",
+                   new CuraArcana(),
+                   new Ignite()
                 }
             }
         },
@@ -103,11 +98,9 @@ public static class Racas
                 //Sabedoria = 12,
                 //Carisma = 13,
                 VidaBase = 50,
-                Habilidades = new List<string>
+                Habilidades = new List<Skill>
                 {
-                    "Espada Divina Escanor - Causa 2d6 de dano",
-                    "Escudo Protetor - Reduz dano e/ou aumenta hp em 2",
-                    "Bigode Masculo - Penteia seu bigode incrivel, o inimigo se distrai e perde 1 de ataque"
+                    new GolpeMarcial()
                 }
             }
         },
@@ -137,11 +130,9 @@ public static class Racas
                 //Sabedoria = 10,
                 //Carisma = 14,
                 VidaBase = 35,
-                Habilidades = new List<string>
+                Habilidades = new List<Skill>
                 {
-                    "Sangue Suga - Rouba hp do inimigo (1d6)",
-                    "Maldição Sombria - Reduz ataque do inimigo em 1",
-                    "Exército dos Mortos - Invoca um zumbi para lutar com você (hp 2, atk 2)"
+                   
                 }
             }
         },
@@ -174,9 +165,8 @@ public static class Racas
                 //Sabedoria = 10,
                 //Carisma = 8,
                 VidaBase = 25,
-                Habilidades = new List<string>
+                Habilidades = new List<Skill>
                 {
-                    "Agilidade Goblin - Corre e evita o próximo ataque",
                     //"Ataque Rápido - Ataque adicional uma vez por turno",
                     //"Sorte - Chance de 25% de causar dano crítico (2x dano) a cada ataque"
                 }

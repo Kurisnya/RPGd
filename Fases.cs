@@ -95,6 +95,7 @@ static public class Fases
             //A PRIMEIRA SALA
             case 1:
                 {
+                    System.Console.WriteLine();
                     Combate.monstros.Add(new Esqueleto());
                     Combate.CombatLoop();
                     string chave = "Chave1";

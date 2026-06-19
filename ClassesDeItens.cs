@@ -18,7 +18,7 @@ public abstract class Arma : ObjetoFísico
 
 public abstract class Armadura : ObjetoFísico
 {
-    public double defesa;
+    public double Defesa;
 
 }
 
@@ -57,7 +57,7 @@ public class Trapos : Armadura
 {
     public Trapos()
     {
-        defesa= 0;
+        Defesa= 1;
         Imagem=@"
 █████████████████████████████████████████████
 █       ▒▒▒▒▒▒                     ▒        █

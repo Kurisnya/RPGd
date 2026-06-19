@@ -1,6 +1,6 @@
 // Este é o template básico para criar fases na classe Fases. Estas fases funcionam da seguinte maneira:
 // -> class FaseProfile: essa classe é como uma carteira de identidade de uma fase, contendo informações
-// informações relevantes para o funcionamento da lógica roguelike. A classe-chefe Fases tem uma lista chamada
+// relevantes para o funcionamento da lógica roguelike. A classe-chefe Fases tem uma lista chamada
 // fasesStatus contendo uma FaseProfile(identidade) para cada fase existente no jogo.
 // -> class Fases: as fases reais e sua lógica estão todas presentes nessa classe. A única maneira do jogador
 // passar de fase é guardando a chave da fase na lista chavesPossuídas da classe Fases. O ciclo se resume assim:

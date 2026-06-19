@@ -3,31 +3,81 @@ namespace RPGd;
 using System.Security.Cryptography.X509Certificates;
 using ConsoleHelper;
 
+//-----------------------------------------------STATUS----------------------------------------------
+//DECLARAÇÃO DA CLASSE DE STATUSEFFECTS
+public class StatusEffects
+{
+    public bool Stunned;
+    public int Burn = 0;
+    public int Weak = 0;
+
+}
+
+
+
+
+//-----------------------------------------------SKILLS---------------------------------------------
 //DECLARAÇÃO DA CLASSE ABSTRATA DE SKILL
 public abstract class Skill
 {
     public string Nome;
-    public abstract double Action();
+    public abstract double Action(Monstro x);
 }
 
 
 //TODAS AS SKILLS:
-public class Atacar : Skill
+public class GolpeMarcial : Skill
 {
-    public Atacar()
+    public GolpeMarcial()
     {
-        Nome = "Atacar";
+        Nome = "Golpe Marcial";
     }
-    public override double Action()
+    public override double Action(Monstro x)
     {
         //RETORNA O ATAQUE DA ARMA DO JOGADOR
         if(Player.Arma is Arma armaTemp)
-        return armaTemp.ataque;
+        return armaTemp.ataque + Player.DadosRaca.Forca;
         else
         return -1;
     }
 }
 
+public class CuraArcana : Skill
+{
+    public CuraArcana()
+    {
+        Nome= "Cura Arcana";
+    }
+
+    public override double Action(Monstro x)
+    {
+        Player.VidaAtual += 4;
+        return 0;
+    }
+}
+
+public class Ignite : Skill
+{
+    public Ignite()
+    {
+        Nome = "Ignite";
+    }
+
+    public override double Action(Monstro x)
+    {
+        //RETORNA O ATAQUE DA ARMA DO JOGADOR
+        if(Player.Arma is Arma armaTemp)
+        {
+            x.status.Burn += 2;
+            System.Console.WriteLine("Você inbui a sua arma com fogo e ataca!");
+            return armaTemp.ataque;         
+        }
+        else
+        return -1;
+    }
+}
+
+//-------------------------------------------MONSTROS------------------------------------------------
 //DECLARAÇÃO DA CLASSE DE MONSTROS
 public abstract class Monstro
 {
@@ -37,10 +87,23 @@ public abstract class Monstro
     public double VidaAtual;
     public double Defesa;
     public Random random = new Random();
+    public StatusEffects status = new StatusEffects();
 
     public string Imagem;
     public abstract void OnDeath();
     public abstract double RollAction();
+
+        //STATUS EFFECTS E SEUS EFEITOS
+        public void PassTurn()
+    {
+        if(this.status.Burn > 0)
+        {
+            this.VidaAtual -= 4;
+            this.status.Burn --;            
+        }
+        if(this.status.Weak > 0)
+            this.status.Weak --;
+    }
 }
 
 //TODOS OS MONSTROS:
@@ -77,7 +140,7 @@ public class Esqueleto : Monstro
     }
     public override double RollAction()
     {
-        int roll = base.random.Next(1,2);
+        int roll = base.random.Next(1,1);
         switch (roll)
         {
             case 1:
@@ -86,11 +149,6 @@ public class Esqueleto : Monstro
                 System.Console.WriteLine("O esqueleto te ataca com suas garras.");
                 return 3;
                 } 
-            case 2:
-                {
-                this.VidaMaxima += 2;
-                return 0;
-                }
         }
         return 0;
     }
@@ -129,6 +187,8 @@ public class Goblin : Monstro
     public override double RollAction()
     {
         Console.WriteLine("O goblin ataca com uma adaga!");
+        if(Player.DadosRaca.Nome=="Goblin")
+        System.Console.WriteLine("Só tem espaço para um golin aqui!");
         return 5;
     }
 }
@@ -197,7 +257,15 @@ public static class Combate
         else
         return 0;
     }
-
+    //CRIAR NOME COM STATUS EFFECTS E VIDA
+    private static string MontarNome(Monstro x)
+    {
+        string y =  $"{x.Nome}   #{x.VidaAtual}/{x.VidaMaxima}";
+        //ADICIONA TAGS DE STATUS
+        if(x.status.Burn > 0)
+            y += " [BRN]";
+        return y;
+    }
     //LISTA DE MONSTROS QUE SERÃO COMBATIDOS(OS MONSTROS FICAM ARMAZENADOS NELA)
     public static List<Monstro> monstros = new List<Monstro>();
     static double DANO(double atq, double def)
@@ -242,7 +310,7 @@ public static class Combate
             //2.Encho a lista com as opções
             foreach(Monstro x in monstros)
             {
-                AllMenus.InterfaceList.Add($"{x.Nome}   #Vida:{x.VidaAtual}/{x.VidaMaxima}");
+                AllMenus.InterfaceList.Add(MontarNome(x));
             }
 
             //3.Limpo o menu e lanço a nova lista nele
@@ -257,7 +325,8 @@ public static class Combate
                 if(x.Nome == choiceSkill.Value)
                 {   
                     int index = choiceMonstro.Value.IndexOf('#') - 3;
-                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(9)).Defesa);
+                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index))), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(9)).Defesa);
+                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).PassTurn();
                 }
             }
 
@@ -273,16 +342,29 @@ public static class Combate
             {
                 System.Console.WriteLine("Você venceu!");
                 Console.ReadKey(true);
+                //COLETANDO RECOMPENSAS
+                foreach(Monstro x in monstros)
+                {
+                    x.OnDeath();
+                }
                 break;
             }
 
             //TURNO DOS INIMIGOS
             foreach(Monstro x in monstros)
             {
+
+                double y;
                 if(x.VidaMaxima > 0)
-                Player.VidaAtual -= x.RollAction();
-                Thread.Sleep(2000);
-                Console.ReadKey();
+                if(Player.Armadura is Armadura armaduraTemp)
+                    {
+                        y = armaduraTemp.Defesa;
+                        Player.VidaAtual -= x.RollAction() - y;
+                        System.Console.WriteLine(x.Imagem);
+                        Thread.Sleep(1000);
+                        Console.ReadKey(true);
+                    }
+                
             }
 
             //VERIFICA SE O PLAYER MORREU
@@ -294,11 +376,6 @@ public static class Combate
                 break;
             }
 
-            //COLETANDO RECOMPENSAS
-            foreach(Monstro x in monstros)
-            {
-                x.OnDeath();
-            }
             Console.ReadKey(true);
         }
         monstros.Clear();
