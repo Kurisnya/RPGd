@@ -246,6 +246,122 @@ public class Fantasma : Monstro
     }
 }
 
+public class Morte : Monstro
+{
+    public Morte()
+    {
+        Nome = "Morte";
+        VidaMaxima = 10;
+        VidaAtual = 10;
+        XP = 11;
+        Defesa = 1;
+        Imagem = @"
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   
+ X      └──────┘└┘┘┘                         X                                   
+ X       ██┘█████████  „_                    X                                   
+ X       ┘└┘█┘    ┘   /_ ^~„                 X                                   
+ X       ┘███ █  ┘ █ // `   \                X                                   
+ X        └┘└┘┘ ┘┘█ //    `\|                X                                   
+ X       └┘█┘█┘┘┘██//       `                X                                   
+ X        ██ █┘█┘┘ -                         X                                   
+ X            ██ ██                          X                                   
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   
+ ";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("A (aprendiz) da Morte ataca com uma foice!");
+        return 4;
+    }
+}
+
+public class Zood : Monstro
+{
+    public Zood()
+    {
+        Nome = "Zodd";
+        VidaMaxima = 40;
+        VidaAtual = 40;
+        XP = 11;
+        Defesa = 1;
+        Imagem = @"
+█████████████████████████████████████████████
+█               .--.                        █
+█              .'  .--.  '.                 █
+█             /   (o  o)   \                █
+█            |     .--.     |               █
+█            |    /____\    |               █
+█             \  .-====-.  /                █
+█          .---'  .____.  '---.             █
+█         /      /  ||  \      \            █
+█        |      /   ||   \      |           █
+█        |     /____||____\     |           █
+█         \        /  \        /            █
+█          '._   .'    '.   _.'             █
+█                                           █
+█████████████████████████████████████████████                               
+ ";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+
+    public override double RollAction()
+    {
+        Console.WriteLine("O Zood ataca com seu corpo demoniaco!");
+        return 2;
+    }
+}
+
+public class Rato : Monstro
+{
+    public Rato()
+    {
+        Nome = "Rato";
+        VidaMaxima = 10;
+        VidaAtual = 10;
+        XP = 15;
+        Defesa = 1;
+        Imagem = @"
+█████████████████████████████████████████████
+█                                           █
+█    ▒         ▒▒      ▒▒▒           ▒      █
+█   ▒▒       ▒▒           ▒▒           ▒    █
+█   ▒      ▒▒                ▒     ▒    ▒▒  █
+█   ▒▒    ▒▒                  ▒ ▒   ▒    ▒  █
+█    ▒▒   ▒          (\_/)       ▒   ▒      █
+█     ▒   ▒▒▒▒       (o.o)           ▒▒     █
+█     ▒▒             /|_|\            ▒     █
+█  ▒  ▒ ▒ ▒  ▒ ▒▒▒    | |   ▒▒▒▒ ▒     ▒    █
+█▒▒ ▒▒   ▒                         ▒ ▒ ▒▒▒▒ █
+█     ▒   ▒ ▒▒▒ ▒▒  ▒▒                ▒▒▒   █
+█     ▒▒▒▒▒          ▒▒▒▒ ▒▒ ▒ ▒ ▒▒         █
+█                                           █
+█████████████████████████████████████████████";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("O rato corrompido ataca com seus dentes!");
+        return 5;
+    }
+}
+
+
 public static class Combate
 {
 //-------------------------------MÉTODOS DO COMBATE---------------------------------------------------------

@@ -188,6 +188,7 @@ public class Behelit : Arma
     public Behelit()
     {
         Nome = "Behelit";
+        ataque = 15;
         Descrição= "Um artefato misterioso vermelho e ovalado, com marcas que lembram um rosto humano. Dizem que ele tem o poder de conceder desejos, mas a um preço terrível.";
         Imagem= @"
 █████████████████████████████████████████████
@@ -203,6 +204,8 @@ public class Behelit : Arma
     }
     public override double atacar()
     {
+        Player.VidaAtual -= 10;
+        System.Console.WriteLine("O Behelit drena a sua vida...");
         return ataque;
     }
 }
