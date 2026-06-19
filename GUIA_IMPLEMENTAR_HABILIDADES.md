@@ -2,7 +2,7 @@
 
 ## 📋 Resumo
 Você criou um sistema de raças com **atributos únicos** e **habilidades especiais**. Este guia mostra como integrar isso no sistema de combate.
-
+usei a ia pra dar um norte aqui pra gente!!!!!!!!!
 ---
 
 ## 1️⃣ Entendendo o Sistema Atual

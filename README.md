@@ -17,3 +17,19 @@ João Mateus Gomes Sales Barbosa
 João Victor Batista Carneiro
 
 Vitor Lucas Firmino Rezende
+   AllMenus.Interface._settings.IntroText = @"
+                                                                 
+                               ██                ████            
+                     ██          █          ██████               
+                     ███       █████       ██   █             ██ 
+         ████████████         ██   ███████ ██   ██      █   ████ 
+      ███           ██ ██     █     █       █    █       █ ███   
+    ██████           █   ██    █████         █████        ███    
+         ███         █    █                                █     
+           ██        █                   ███████          ██     
+             █      █               █████      █████      █      
+              █    ██         ██████               ████   █      
+              ██ ███      ████                            █      
+               ██      ████                               █      
+               █     ██                                          
+                                                                 ";

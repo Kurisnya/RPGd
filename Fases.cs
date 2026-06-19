@@ -1,108 +1,200 @@
 namespace RPGd;
-//ATENÇÃO: Se você quiser colaborar com esta parte do código criando fases, consulte o Templates.txt
-//e siga as linhas com a palavra chave [COLABORADOR].
-using System.Data.Common;
-using System.Runtime.CompilerServices;
+
+using System;
+using System.Collections.Generic;
 using ConsoleHelper;
-//CLASSE QUE CONTÉM INFORMAÇÕES DE UMA FASE
+
 public class FaseProfile
 {
     public int id;
     public string chave;
     public bool isClear;
 }
-static public class Fases
+
+public static class Loot
 {
-    static private int FaseId = 0;
-    static private List<string> chavesPossuídas = new List<string>();
-    static private List<FaseProfile> fasesStatus= new List<FaseProfile>();
     private static Random random = new Random();
 
-    //CONSTRUTOR
+    public static Arma GerarArmaAleatoria()
+    {
+        int roll = random.Next(1, 8);
+
+        switch (roll)
+        {
+            case 1: return new Adaga();
+            case 2: return new EspadaEnferrujada();
+            case 3: return new EspadaReta();
+            case 4: return new Machado();
+            case 5: return new Arco();
+            case 6: return new CaixaDeMarimbondo();
+            case 7: return new Behelit();
+            default: return new Nada();
+        }
+    }
+}
+
+public static class Fases
+{
+    private static int FaseId = 1;
+    private static List<string> chavesPossuidas = new();
+    private static List<FaseProfile> fasesStatus = new();
+
     static Fases()
     {
-        //LISTA DE FASES - STATUS [COLABORADOR 1]
-        fasesStatus.Add(new FaseProfile
+        for (int i = 1; i <= 5; i++)
         {
-            id=1,
-            chave = "Chave1"
-        });
-        
-    }
-
-    //ADICIONA A CHAVE NAS CHAVES POSSUÍDAS
-    static private void AddKey(string chave)
-    {
-        //VERIFICA SE A CHAVE JÁ EXISTE NA LISTA
-        if (!chavesPossuídas.Contains(chave))
-        {
-            chavesPossuídas.Add(chave);
-        }
-        else
-        System.Console.WriteLine("Eu já sabia...");
-    }
-    static private void GenerateRoom()
-    {
-        //PEGA UM NÚMERO ALEATÓRIO
-        int i=random.Next(0,1);
-
-        //VERIFICA SE ESSA SALA JÁ FOI COMPLETADA
-        foreach(FaseProfile fase in fasesStatus)
-        {   
-            //CONFIRMA QUE É A FASE CERTA PELO ID
-            if(fase.id == i)
+            fasesStatus.Add(new FaseProfile
             {
-                //VERIFICA SE A FASE JÁ ESTÁ COMPLETA
-                if(fase.isClear !=true)
-                FaseId=i;
+                id = i,
+                chave = $"Chave{i}",
+                isClear = false
+            });
+        }
+    }
 
+    // =========================
+    // CHAVES
+    // =========================
+    private static void AddKey(string chave)
+    {
+        if (!chavesPossuidas.Contains(chave))
+            chavesPossuidas.Add(chave);
+    }
+
+    private static void MarcarFase(string chave)
+    {
+        foreach (var f in fasesStatus)
+        {
+            if (f.chave == chave)
+            {
+                f.isClear = true;
+                return;
             }
         }
-        AllMenus.loop = false;
     }
 
-    static private void NextRoom(string chave)
+    // =========================
+    // INVENTÁRIO
+    // =========================
+    public static void AbrirInventario()
     {
-        if (chavesPossuídas.Contains(chave))
+        Console.WriteLine("\n=== INVENTÁRIO ===");
+
+        if (Player.InventarioArmas.Count == 0)
         {
-            System.Console.WriteLine("Ok.. hora de sair daqui...");
-            //VASCULHA A TAL FASE E MARCA COMO CONCLUÍDA
-            foreach(FaseProfile fase in fasesStatus)
-            {
-                if(fase.chave==chave)
-                fase.isClear=true;
-            }
+            Console.WriteLine("Você não possui armas.");
             Console.ReadKey();
+            return;
         }
-        else
+
+        for (int i = 0; i < Player.InventarioArmas.Count; i++)
         {
-            System.Console.WriteLine("Não tem saída.");
-            Console.ReadKey();
+            Console.WriteLine($"{i} - {Player.InventarioArmas[i].Nome}");
+        }
+
+        Console.WriteLine("\nEscolha a arma:");
+
+        if (!int.TryParse(Console.ReadLine(), out int escolha))
+            return;
+
+        if (escolha >= 0 && escolha < Player.InventarioArmas.Count)
+        {
+            Player.Arma = Player.InventarioArmas[escolha];
+            Console.WriteLine($"Equipou: {Player.Arma.Nome}");
+        }
+
+        Console.ReadKey();
+    }
+
+    // =========================
+    // FINAL DA FASE
+    // =========================
+    private static void FinalizarFase()
+    {
+        Arma drop = Loot.GerarArmaAleatoria();
+
+        Console.WriteLine("\nVocê encontrou:");
+        Console.WriteLine(drop.Nome);
+        Console.WriteLine(drop.Descrição);
+
+        Player.InventarioArmas.Add(drop);
+        Player.Arma = drop;
+
+        // efeito especial
+        if (drop is Behelit)
+        {
+            Console.WriteLine("Algo estranho pulsa na sua mão...");
+            Player.VidaAtual -= 10;
+        }
+
+        if (Player.VidaAtual < 0)
+            Player.VidaAtual = 0;
+
+        Player.VidaAtual = Player.VidaMaxima;
+
+        Console.ReadKey();
+    }
+
+    // =========================
+    // LOOP DE MENU DA FASE
+    // =========================
+    private static void MenuFase()
+    {
+        bool menu = true;
+
+        while (menu)
+        {
+            AllMenus.InterfaceList.Clear();
+            AllMenus.InterfaceList.Add("Inventário");
+            AllMenus.InterfaceList.Add("Continuar");
+
+            AllMenus.LimparEInserir();
+
+            var choice = AllMenus.Interface.ReadChoice(true);
+
+            switch (choice.Value)
+            {
+                case "Inventário":
+                    AbrirInventario();
+                    break;
+
+                case "Continuar":
+                    menu = false;
+                    break;
+            }
         }
     }
 
-    //LISTA DE FASES
+    // =========================
+    // EXECUTAR FASE
+    // =========================
+    private static void ExecutarFase(Monstro monstro, string chave, string ascii)
+    {
+        Combate.monstros.Clear();
+        Combate.monstros.Add(monstro);
+
+        Combate.CombatLoop();
+
+        FinalizarFase();
+        AddKey(chave);
+        MarcarFase(chave);
+
+        AllMenus.Interface._settings.IntroText = ascii;
+
+        MenuFase();
+    }
+
+    // =========================
+    // START
+    // =========================
     public static void Start()
-    {   
-        if(FaseId == 0)
-            FaseId = 1;
-        //LOOP RESETADO
-        AllMenus.loop=true;
+    {
+        AllMenus.loop = true;
 
-        //SWITCH DAS FASES - LISTA [COLABORADOR 2]
         switch (FaseId)
         {
-            //A PRIMEIRA SALA
             case 1:
-                {
-                    Combate.monstros.Add(new Esqueleto());
-                    Combate.CombatLoop();
-                    string chave = "Chave1";
-                    while (AllMenus.loop == true)
-                    {
-                        //MUDA A ARTE DO BANNER ASCII
-                        AllMenus.Interface._settings.IntroText=@"
-                                                                 
+                ExecutarFase(new Esqueleto(), "Chave1", @"                                                               
                                ██                ████            
                      ██          █          ██████               
                      ███       █████       ██   █             ██ 
@@ -116,62 +208,88 @@ static public class Fases
               ██ ███      ████                            █      
                ██      ████                               █      
                █     ██                                          
-                                                                 ";
+                                                                 ");
+                break;
 
-                        //1.Limpo as opções da lista do menu
-                        AllMenus.InterfaceList.Clear();
+            case 2:
+                ExecutarFase(new Goblin(), "Chave2", @"                                                               
+                               ██                ████            
+                     ██          █          ██████               
+                     ███       █████       ██   █             ██ 
+         ████████████         ██   ███████ ██   ██      █   ████ 
+      ███           ██ ██     █     █       █    █       █ ███   
+    ██████           █   ██    █████         █████        ███    
+         ███         █    █                                █     
+           ██        █                   ███████          ██     
+             █      █               █████      █████      █      
+              █    ██         ██████               ████   █      
+              ██ ███      ████                            █      
+               ██      ████                               █      
+               █     ██                                          
+                                                                 ");
+                break;
 
-                        //2.Encho a lista com as opções
-                        AllMenus.InterfaceList.Add("Graffiti");
-                        AllMenus.InterfaceList.Add("Sair da Sala");
-                        
+            case 3:
+                ExecutarFase(new Fantasma(), "Chave3", @"                                                               
+                               ██                ████            
+                     ██          █          ██████               
+                     ███       █████       ██   █             ██ 
+         ████████████         ██   ███████ ██   ██      █   ████ 
+      ███           ██ ██     █     █       █    █       █ ███   
+    ██████           █   ██    █████         █████        ███    
+         ███         █    █                                █     
+           ██        █                   ███████          ██     
+             █      █               █████      █████      █      
+              █    ██         ██████               ████   █      
+              ██ ███      ████                            █      
+               ██      ████                               █      
+               █     ██                                          
+                                                                 ");
+                break;
 
-                        //3.Limpo o menu e lanço a nova lista nele
-                        AllMenus.LimparEInserir();
+            case 4:
+                ExecutarFase(new Zood(), "Chave4", @"                                                               
+                               ██                ████            
+                     ██          █          ██████               
+                     ███       █████       ██   █             ██ 
+         ████████████         ██   ███████ ██   ██      █   ████ 
+      ███           ██ ██     █     █       █    █       █ ███   
+    ██████           █   ██    █████         █████        ███    
+         ███         █    █                                █     
+           ██        █                   ███████          ██     
+             █      █               █████      █████      █      
+              █    ██         ██████               ████   █      
+              ██ ███      ████                            █      
+               ██      ████                               █      
+               █     ██                                          
+                                                                 ");
+                break;
 
-                        //Adiciono a opção de voltar
-                         AllMenus.Interface.Options.Add(new MenuItem
-                        {
-                            Title= "Voltar",
-                            Value= "Voltar"
-                        });
-                        
-                        //OPÇÃO É SELECIONADA
-                        var choiceINV = AllMenus.Interface.ReadChoice(true);
-                        if(choiceINV.Value == "Voltar")
-                        {
-                            AllMenus.loop = false;
-                        }
-                        else
-                        {
-                            switch (choiceINV.Value)
-                            {
-                                case "Graffiti":
-                                    {
-                                        Console.WriteLine("Um graffiti na parede, o que Diddy significa?");
-                                        System.Console.WriteLine("Olha, uma porta...");
-                                        //[COLABORADOR 3]
-                                        AddKey(chave);
-                                        Console.ReadKey(true);
-                                    }
-                                break;
-                                case "Sair da Sala":
-                                    {
-                                        //[COLABORADOR 3]
-                                        NextRoom(chave);
-                                        //[COLABORADOR 3]
-                                        GenerateRoom();
+            case 5:
+                ExecutarFase(new Morte(), "Chave5", @"                                                               
+                               ██                ████            
+                     ██          █          ██████               
+                     ███       █████       ██   █             ██ 
+         ████████████         ██   ███████ ██   ██      █   ████ 
+      ███           ██ ██     █     █       █    █       █ ███   
+    ██████           █   ██    █████         █████        ███    
+         ███         █    █                                █     
+           ██        █                   ███████          ██     
+             █      █               █████      █████      █      
+              █    ██         ██████               ████   █      
+              ██ ███      ████                            █      
+               ██      ████                               █      
+               █     ██                                          
+                                                                 ");
+                break;
 
-                                    }
-                                break;
-                            }
-                        }                        
-
-                    }
-                }
-            break;
+            default:
+                Console.WriteLine("Você venceu o jogo!");
+                Console.ReadKey();
+                Environment.Exit(0);
+                break;
         }
-        
+
+        FaseId++;
     }
-    
 }

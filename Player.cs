@@ -13,11 +13,11 @@ public static class Player
     
     // ATRIBUTOS
     static public int Forca { get; set; }
-    static public int Destreza { get; set; }
-    static public int Constituicao { get; set; }
-    static public int Inteligencia { get; set; }
-    static public int Sabedoria { get; set; }
-    static public int Carisma { get; set; }
+   // static public int Destreza { get; set; }
+   // static public int Constituicao { get; set; }
+    //static public int Inteligencia { get; set; }
+    //static public int Sabedoria { get; set; }
+   // static public int Carisma { get; set; }
     
     // VIDA
     static public double VidaMaxima { get; set; }
@@ -61,6 +61,7 @@ public static class Player
         VidaMaxima = DadosRaca.VidaBase;
         VidaAtual = DadosRaca.VidaBase;
     }
+    public static List<Arma> InventarioArmas = new List<Arma>();
     
     // Exibe o status do jogador
     static public void ExibirStatus()

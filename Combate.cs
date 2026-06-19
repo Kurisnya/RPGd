@@ -21,10 +21,10 @@ public class Atacar : Skill
     public override double Action()
     {
         //RETORNA O ATAQUE DA ARMA DO JOGADOR
-        if(Player.Arma is Arma armaTemp)
-        return armaTemp.ataque;
+        if (Player.Arma is Arma armaTemp)
+            return armaTemp.ataque;
         else
-        return -1;
+            return -1;
     }
 }
 
@@ -48,8 +48,8 @@ public class Esqueleto : Monstro
 {
     public Esqueleto()
     {
-        Nome= "Esqueleto";
-        VidaMaxima= 15;
+        Nome = "Esqueleto";
+        VidaMaxima = 15;
         VidaAtual = 15;
         XP = 10;
         Defesa = 0;
@@ -77,25 +77,123 @@ public class Esqueleto : Monstro
     }
     public override double RollAction()
     {
-        int roll = base.random.Next(1,2);
+        int roll = base.random.Next(1, 2);
         switch (roll)
         {
             case 1:
                 {
-                AllMenus.Interface._settings.IntroText=Imagem;
-                System.Console.WriteLine("O esqueleto te ataca com suas garras.");
-                return 3;
-                } 
+                    AllMenus.Interface._settings.IntroText = Imagem;
+                    System.Console.WriteLine("O esqueleto te ataca com suas garras.");
+                    return 3;
+                }
             case 2:
                 {
-                this.VidaMaxima += 2;
-                return 0;
+                    this.VidaMaxima += 2;
+                    return 0;
                 }
         }
         return 0;
     }
 }
+public class Morte : Monstro
+{
+    public Morte()
+    {
+        Nome = "Morte";
+        VidaMaxima = 10;
+        VidaAtual = 10;
+        XP = 11;
+        Defesa = 1;
+        Imagem = @"
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   
+ X      └──────┘└┘┘┘                         X                                   
+ X       ██┘█████████  „_                    X                                   
+ X       ┘└┘█┘    ┘   /_ ^~„                 X                                   
+ X       ┘███ █  ┘ █ // `   \                X                                   
+ X        └┘└┘┘ ┘┘█ //    `\|                X                                   
+ X       └┘█┘█┘┘┘██//       `                X                                   
+ X        ██ █┘█┘┘ -                         X                                   
+ X            ██ ██                          X                                   
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   
+ ";
+    }
 
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("A (aprendiz) da Morte ataca com uma foice!");
+        return 4;
+    }
+}
+
+public class Zood : Monstro
+{
+    public Zood()
+    {
+        Nome = "Zood";
+        VidaMaxima = 40;
+        VidaAtual = 40;
+        XP = 11;
+        Defesa = 1;
+        Imagem = @"
+       .--.
+      .'  .--.  '.
+     /   (o  o)   \
+    |     .--.     |
+    |    /____\    |
+     \  .-====-.  /
+  .---'  .____.  '---.
+ /      /  ||  \      \
+|      /   ||   \      |
+|     /____||____\     |
+ \        /  \        /
+  '._   .'    '.   _.'
+                                              
+ ";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("O Zood ataca com seu corpo demoniaco!");
+        return 2;
+    }
+}
+public class Rato : Monstro
+{
+    public Rato()
+    {
+        Nome = "Rato";
+        VidaMaxima = 10;
+        VidaAtual = 10;
+        XP = 15;
+        Defesa = 1;
+        Imagem = @"
+ (\_/)
+ (o.o)
+ /|_|\
+  | |";
+    }
+
+    public override void OnDeath()
+    {
+        Player.XP += XP;
+    }
+
+    public override double RollAction()
+    {
+        Console.WriteLine("O rato corrompido ataca com seus dentes!");
+        return 5;
+    }
+}
 public class Goblin : Monstro
 {
     public Goblin()
@@ -128,7 +226,7 @@ public class Goblin : Monstro
 
     public override double RollAction()
     {
-        Console.WriteLine("O goblin ataca com uma adaga!");
+        Console.WriteLine("O goblin ataca com sua adaga!");
         return 5;
     }
 }
@@ -185,123 +283,140 @@ public class Fantasma : Monstro
         return 0;
     }
 }
-
 public static class Combate
 {
-//-------------------------------MÉTODOS DO COMBATE---------------------------------------------------------
-    //VERIFICAR SE TEM ALGUM MONSTRO VIVO
-    private static int VerificarInimigosVivos(Monstro x)
-    {
-        if(x.VidaAtual > 0)
-        return 1;
-        else
-        return 0;
-    }
-
-    //LISTA DE MONSTROS QUE SERÃO COMBATIDOS(OS MONSTROS FICAM ARMAZENADOS NELA)
     public static List<Monstro> monstros = new List<Monstro>();
+
     static double DANO(double atq, double def)
     {
-        return atq - def;
+        double dano = atq - def;
+        return dano < 0 ? 0 : dano;
     }
 
-    //LOOP BÁSICO
     public static void CombatLoop()
     {
         while (true)
         {
+            // =========================
+            // VERIFICA SE EXISTEM INIMIGOS
+            // =========================
+            if (monstros.Count == 0)
+            {
+                Console.WriteLine("Não há inimigos.");
+                return;
+            }
+
+            // =========================
+            // HUD DO PLAYER
+            // =========================
             AllMenus.Interface._settings.IntroText = @$"
 █████████████████████████████████████████████
-█                                           █
-█   Nome: {Player.Nome}           Vida: {Player.VidaAtual}/{Player.VidaMaxima}
-█   Arma: {Player.Arma.Nome}      XP: {Player.XP}
+█   Nome: {Player.Nome}   Vida: {Player.VidaAtual}/{Player.VidaMaxima}
+█   Arma: {Player.Arma.Nome}   XP: {Player.XP}
 █   Armadura: {Player.Armadura.Nome}
-█                                           █
 █████████████████████████████████████████████";
-            //ESCOLHENDO A AÇÃO (SKILL)
-            //1.Limpo as opções da lista do menu
+
+            // =========================
+            // ESCOLHA SKILL
+            // =========================
             AllMenus.InterfaceList.Clear();
 
-            //2.Encho a lista com as opções DE SKILL
-            foreach(Skill x in Player.InventárioSkills)
-            {
+            foreach (Skill x in Player.InventárioSkills)
                 AllMenus.InterfaceList.Add(x.Nome);
-            }
 
-            //3.Limpo o menu e lanço a nova lista nele
             AllMenus.LimparEInserir();
 
-            //LANÇO O MENU
             var choiceSkill = AllMenus.Interface.ReadChoice(true);
 
+            Skill skillEscolhida =
+                Player.InventárioSkills.FirstOrDefault(s => s.Nome == choiceSkill.Value);
 
-            //ESCOLHENDO O ALVO (MONSTRO)
-            //1.Limpo as opções da lista do menu
+            if (skillEscolhida == null)
+                continue;
+
+            // =========================
+            // ESCOLHA MONSTRO
+            // =========================
             AllMenus.InterfaceList.Clear();
 
-            //2.Encho a lista com as opções
-            foreach(Monstro x in monstros)
-            {
-                AllMenus.InterfaceList.Add($"{x.Nome}   #Vida:{x.VidaAtual}/{x.VidaMaxima}");
-            }
+            foreach (Monstro x in monstros)
+                AllMenus.InterfaceList.Add($"{x.Nome} HP:{x.VidaAtual}/{x.VidaMaxima}");
 
-            //3.Limpo o menu e lanço a nova lista nele
             AllMenus.LimparEInserir();
 
-            //LANÇO O MENU
             var choiceMonstro = AllMenus.Interface.ReadChoice(true);
 
-            //VALIDO A AÇÃO E GIRO O DANO (SKILL X NO MONSTRO X)
-            foreach (Skill x in Player.InventárioSkills)
+            Monstro alvo = monstros
+                .FirstOrDefault(m => $"{m.Nome} HP:{m.VidaAtual}/{m.VidaMaxima}" == choiceMonstro.Value);
+
+            if (alvo == null)
+                continue;
+            // =========================
+            // MOSTRAR INIMIGO
+            // =========================
+            Console.Clear();
+
+            Console.WriteLine(alvo.Imagem);
+            Console.WriteLine($"INIMIGO: {alvo.Nome}");
+            Console.WriteLine($"VIDA: {alvo.VidaAtual}/{alvo.VidaMaxima}");
+            Console.WriteLine($"DEFESA: {alvo.Defesa}");
+
+            Console.ReadKey(true);
+
+            // =========================
+            // DANO DO PLAYER
+            // =========================
+            double dano = skillEscolhida.Action();
+            alvo.VidaAtual -= DANO(dano, alvo.Defesa);
+
+            if (Player.Arma is Behelit)
             {
-                if(x.Nome == choiceSkill.Value)
-                {   
-                    int index = choiceMonstro.Value.IndexOf('#') - 3;
-                    monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(index)).VidaAtual -= DANO(x.Action(), monstros.Find(x => x.Nome == choiceMonstro.Value.Remove(9)).Defesa);
-                }
+                Player.VidaAtual -= 10;
+                Console.WriteLine("O Behelit drena sua vida...");
             }
 
-            
-            //VERIFICA SE TEM ALGUM MONSTRO RESTANTE
+            // =========================
+            // CHECA VITÓRIA
+            // =========================
+            bool vivos = monstros.Any(m => m.VidaAtual > 0);
 
-            int res = 0;
-            foreach(Monstro x in monstros)
+            if (!vivos)
             {
-                res = VerificarInimigosVivos(x);
-            }
-            if(res == 0)
-            {
-                System.Console.WriteLine("Você venceu!");
-                Console.ReadKey(true);
+                Console.WriteLine("Você venceu!");
                 break;
             }
 
-            //TURNO DOS INIMIGOS
-            foreach(Monstro x in monstros)
+            // =========================
+            // TURNO DOS INIMIGOS
+            // =========================
+            foreach (Monstro x in monstros)
             {
-                if(x.VidaMaxima > 0)
-                Player.VidaAtual -= x.RollAction();
-                Thread.Sleep(2000);
-                Console.ReadKey();
+                if (x.VidaAtual > 0)
+                    Player.VidaAtual -= x.RollAction();
             }
 
-            //VERIFICA SE O PLAYER MORREU
-            if(Player.VidaAtual <= 0)
+            // =========================
+            // MORTE DO PLAYER
+            // =========================
+            if (Player.VidaAtual <= 0)
             {
-                System.Console.WriteLine("Você morreu...");
+                Console.WriteLine("Você morreu...");
+                Console.ReadKey();
                 Environment.Exit(0);
-                Console.ReadKey();
-                break;
             }
 
-            //COLETANDO RECOMPENSAS
-            foreach(Monstro x in monstros)
+            // =========================
+            // RECOMPENSA XP
+            // =========================
+            foreach (Monstro x in monstros)
             {
-                x.OnDeath();
+                if (x.VidaAtual <= 0)
+                    x.OnDeath();
             }
+
             Console.ReadKey(true);
         }
+
         monstros.Clear();
     }
-
 }

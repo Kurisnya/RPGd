@@ -126,10 +126,12 @@ public static class Racas
         \            /
          '.        .'
            '-.__.-'
+           |      |
+           |      |
 
              ",
 
-                Descricao = "Ocultista sombrio, ninguem sabe suas intenções, seu esquisito!",
+                Descricao = "Ocultista sombrio, ninguem sabe suas intenções, deveras esquisito!",
                 Forca = 10,
                 //Destreza = 11,
                 //Constituicao = 12,

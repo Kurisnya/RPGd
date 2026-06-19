@@ -189,6 +189,8 @@ public class Behelit : Arma
     {
         Nome = "Behelit";
         Descrição= "Um artefato misterioso vermelho e ovalado, com marcas que lembram um rosto humano. Dizem que ele tem o poder de conceder desejos, mas a um preço terrível.";
+         ataque = 15;
+         
         Imagem= @"
 █████████████████████████████████████████████
 █   ▒▒▒▒▒▒▒ ▒▒    ▌     ▌       ▒▒          █

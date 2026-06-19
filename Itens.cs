@@ -19,6 +19,10 @@ public static class Itens
 
         
     }
+    public static ObjetoFísico PegarItem(string nomeDoItem)
+{
+    return ItensLista.FirstOrDefault(x => x.Nome == nomeDoItem);
+}
 
     public static void BuscarEDescreverEquipamento(string nomeDoItem)
     {

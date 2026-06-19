@@ -27,7 +27,7 @@ public static class MenuRaca
             
             var escolha = AllMenus.Interface.ReadChoice(true);
             
-            TipoRaca racaSelecionada = escolha.Value switch // se quiser adicionar mais aqui diddy⬇️
+            TipoRaca racaSelecionada = escolha.Value switch
             {
                 "Mago" => TipoRaca.Mago,
                 "Cavaleiro" => TipoRaca.Cavaleiro,
